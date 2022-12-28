@@ -8,7 +8,6 @@ import com.kabe.quizapp.domain.Trivia
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.util.ArrayList
 import javax.inject.Inject
 
 @HiltViewModel
