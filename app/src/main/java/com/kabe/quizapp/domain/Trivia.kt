@@ -14,6 +14,6 @@ data class Trivia(
    @SerializedName("difficulty") var difficulty: String?,
    @SerializedName("question") var question: String,
    @SerializedName("correct_answer") var correctAnswer: String?,
-   //@SerializedName("incorrect_answers") var incorrectAnswers: List<String>
+   @SerializedName("incorrect_answers") var incorrectAnswers: List<String>
 ): Serializable
 
