@@ -8,8 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.kabe.quizapp.ui.presentation.destinations.PlayScreenDestination
 import com.kabe.quizapp.ui.presentation.destinations.QuizScreenDestination
+import com.kabe.quizapp.ui.presentation.destinations.SetUpScreenDestination
 import com.kabe.quizapp.ui.theme.QuizAppTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph

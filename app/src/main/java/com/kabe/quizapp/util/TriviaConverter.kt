@@ -13,7 +13,7 @@ class TriviaConverter {
     @TypeConverter
     fun toStringArrayList(value: String): List<String> {
         return try {
-            Gson().fromJson<List<String>>(value) //using extension function
+            Gson().fromJson(value) //using extension function
         } catch (e: Exception) {
             listOf()
         }
