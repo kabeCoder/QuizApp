@@ -15,9 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
+import com.kabe.quizapp.R
 
 @Destination
 @Composable
@@ -30,22 +32,21 @@ fun SetUpScreen() {
 }
 
 @Composable
-fun DropDownMenu(){
-
+fun DropDownMenu() {
     // Declaring a boolean value to store
     // the expanded state of the Text Field
-    var mExpanded by remember { mutableStateOf(false) }
+    val mExpanded = remember { mutableStateOf(false) }
 
     // Create a list of cities
-    val mCities = listOf("Delhi", "Mumbai", "Chennai", "Kolkata", "Hyderabad", "Bengaluru", "Pune")
+    val selectDifficulty = stringArrayResource(id = R.array.difficulty)
 
     // Create a string value to store the selected city
-    var mSelectedText by remember { mutableStateOf("") }
+    val mSelectedText = remember { mutableStateOf("") }
 
-    var mTextFieldSize by remember { mutableStateOf(Size.Zero)}
+    val mTextFieldSize = remember { mutableStateOf(Size.Zero) }
 
     // Up Icon when expanded and down icon when collapsed
-    val icon = if (mExpanded)
+    val icon = if (mExpanded.value)
         Icons.Filled.KeyboardArrowUp
     else
         Icons.Filled.KeyboardArrowDown
@@ -55,34 +56,35 @@ fun DropDownMenu(){
         // Create an Outlined Text Field
         // with icon and not expanded
         OutlinedTextField(
-            value = mSelectedText,
-            onValueChange = { mSelectedText = it },
+            value = mSelectedText.value,
+            onValueChange = { mSelectedText.value = it },
             modifier = Modifier
                 .fillMaxWidth()
                 .onGloballyPositioned { coordinates ->
                     // This value is used to assign to
                     // the DropDown the same width
-                    mTextFieldSize = coordinates.size.toSize()
+                    mTextFieldSize.value = coordinates.size.toSize()
                 },
-            label = {Text("Label")},
+            label = { Text("Select Difficulty") },
+            enabled = false,
             trailingIcon = {
-                Icon(icon,"contentDescription",
-                    Modifier.clickable { mExpanded = !mExpanded })
+                Icon(icon, "contentDescription",
+                    Modifier.clickable { mExpanded.value = !mExpanded.value })
             }
         )
 
         // Create a drop-down menu with list of cities,
         // when clicked, set the Text Field text as the city selected
         DropdownMenu(
-            expanded = mExpanded,
-            onDismissRequest = { mExpanded = false },
+            expanded = mExpanded.value,
+            onDismissRequest = { mExpanded.value = false },
             modifier = Modifier
-                .width(with(LocalDensity.current){mTextFieldSize.width.toDp()})
+                .width(with(LocalDensity.current) { mTextFieldSize.value.width.toDp() })
         ) {
-            mCities.forEach { label ->
+            selectDifficulty.forEach { label ->
                 DropdownMenuItem(onClick = {
-                    mSelectedText = label
-                    mExpanded = false
+                    mSelectedText.value = label
+                    mExpanded.value = false
                 }) {
                     Text(text = label)
                 }

@@ -1,12 +1,17 @@
 package com.kabe.quizapp.data.network
 
-import com.kabe.quizapp.constant.AppConstants
 import com.kabe.quizapp.data.model.response.TriviaResponse
-import com.kabe.quizapp.domain.Trivia
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface TriviaService {
 
-    @GET(AppConstants.URL_ENDPOINT)
-    suspend fun getTrivia(): TriviaResponse
+    @GET("api.php")
+    suspend fun getTrivia(
+        @Query("amount") amount: Int,
+        @Query("category") category: Int,
+        @Query("difficulty") difficulty: String,
+        @Query("type") type: String
+    ): TriviaResponse
+
 }

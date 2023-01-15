@@ -11,9 +11,9 @@ class TriviaRepository @Inject constructor(
     private val triviaService: TriviaService,
     private val appDatabase: AppDatabase
 ) : BaseRepository() {
-    suspend fun getTrivia (): Resource<List<Trivia>> = serviceCall {
+    suspend fun getTrivia ( amount: Int, category: Int, difficulty: String, type: String ): Resource<List<Trivia>> = serviceCall {
 
-        val result = triviaService.getTrivia()
+        val result = triviaService.getTrivia(amount,category,difficulty,type)
 
         appDatabase.triviaDao().insertCurrentTrivia(result.results)
 

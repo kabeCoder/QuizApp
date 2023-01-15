@@ -1,5 +1,6 @@
 package com.kabe.quizapp.ui.presentation.quizscreen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kabe.quizapp.data.base.Status
@@ -23,12 +24,12 @@ class QuizScreenViewModel @Inject constructor(
    val trivia: SharedFlow<List<Trivia>> = _trivia.asSharedFlow()
 
     init {
-        getTrivia()
+        getTrivia(10,9,"medium", "multiple")
     }
 
-    private fun getTrivia() {
+    private fun getTrivia(amount: Int, category: Int, difficulty: String, type: String) {
         viewModelScope.launch {
-            val triviaResult = triviaRepository.getTrivia()
+            val triviaResult = triviaRepository.getTrivia(amount,category,difficulty,type)
             when(triviaResult.status) {
                 Status.SUCCESS -> triviaResult.data?.let { trivia ->
                     _trivia.emit(trivia.toMutableList())
