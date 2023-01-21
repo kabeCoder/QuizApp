@@ -26,7 +26,7 @@ fun StartScreen(navigator: DestinationsNavigator?) {
             centerVerticallyTo(parent)
             centerHorizontallyTo(parent)
         }) {
-            navigator?.navigate(QuizScreenDestination)
+            navigator?.navigate(SetUpScreenDestination)
         }
 
         Buttons(buttonName = "Exit", modifier = Modifier.constrainAs(exitButton) {

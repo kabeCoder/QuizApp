@@ -19,11 +19,17 @@ import kotlin.math.min
 @Destination
 @Composable
 fun QuizScreen(
+    amount: Int,
+    category: Int,
+    difficulty: String,
+    type: String,
     navigator: DestinationsNavigator?,
     viewModel: QuizScreenViewModel = hiltViewModel()
 ) {
 
     val triviaList by viewModel.trivia.collectAsState(initial = emptyList())
+
+    viewModel.getTrivia(amount, category, difficulty, type)
 
     val currentTriviaIndex = remember {
         mutableStateOf(0)
@@ -50,6 +56,6 @@ fun QuizScreen(
 @Composable
 fun PreviewQuizScreen() {
     QuizAppTheme {
-        QuizScreen(null)
+        QuizScreen(0, 0, "", "", null)
     }
 }

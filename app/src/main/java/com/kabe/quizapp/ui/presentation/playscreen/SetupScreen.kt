@@ -20,71 +20,103 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import com.kabe.quizapp.R
+import com.kabe.quizapp.ui.presentation.destinations.QuizScreenDestination
+import com.kabe.quizapp.ui.presentation.quizscreen.QuizScreenViewModel
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination
 @Composable
-fun SetUpScreen() {
+fun SetUpScreen(
+    navigator: DestinationsNavigator?
+) {
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
-        val (dropDownMenu) = createRefs()
+        val (amount, category, difficulty, type, confirmButton) = createRefs()
 
-        DropDownMenu()
+        DropDownMenu(
+            "Number of Questions",
+            stringArrayResource(id = R.array.number_of_questions),
+            modifier = Modifier.constrainAs(amount) {
+                top.linkTo(parent.top, margin = 16.dp)
+
+            })
+        DropDownMenu(
+            "Category",
+            stringArrayResource(id = R.array.category),
+            modifier = Modifier.constrainAs(category) {
+                top.linkTo(amount.bottom, margin = 16.dp)
+            })
+        DropDownMenu(
+            "Difficulty",
+            stringArrayResource(id = R.array.difficulty),
+            modifier = Modifier.constrainAs(difficulty) {
+                top.linkTo(category.bottom, margin = 16.dp)
+            })
+        DropDownMenu(
+            "Type",
+            stringArrayResource(id = R.array.type), modifier = Modifier.constrainAs(type) {
+                top.linkTo(difficulty.bottom, margin = 16.dp)
+            })
+
+        ConfirmButton(label = "Confirm", modifier = Modifier.constrainAs(confirmButton) {
+            top.linkTo(type.bottom, margin = 16.dp)
+            centerHorizontallyTo(parent)
+        }) {
+            navigator?.navigate(QuizScreenDestination(10,9,"medium","multiple"))
+        }
     }
 }
 
 @Composable
-fun DropDownMenu() {
+fun DropDownMenu(selectTitle: String, selectedList: Array<String>, modifier: Modifier) {
     // Declaring a boolean value to store
     // the expanded state of the Text Field
-    val mExpanded = remember { mutableStateOf(false) }
-
-    // Create a list of cities
-    val selectDifficulty = stringArrayResource(id = R.array.difficulty)
+    val isExpanded = remember { mutableStateOf(false) }
 
     // Create a string value to store the selected city
-    val mSelectedText = remember { mutableStateOf("") }
+    val initialSelected = remember { mutableStateOf("") }
 
     val mTextFieldSize = remember { mutableStateOf(Size.Zero) }
 
     // Up Icon when expanded and down icon when collapsed
-    val icon = if (mExpanded.value)
+    val icon = if (isExpanded.value)
         Icons.Filled.KeyboardArrowUp
     else
         Icons.Filled.KeyboardArrowDown
 
-    Column(Modifier.padding(20.dp)) {
+    Column(modifier.padding(20.dp)) {
 
         // Create an Outlined Text Field
         // with icon and not expanded
         OutlinedTextField(
-            value = mSelectedText.value,
-            onValueChange = { mSelectedText.value = it },
-            modifier = Modifier
+            value = initialSelected.value,
+            onValueChange = { initialSelected.value = it },
+            modifier = modifier
                 .fillMaxWidth()
                 .onGloballyPositioned { coordinates ->
                     // This value is used to assign to
                     // the DropDown the same width
                     mTextFieldSize.value = coordinates.size.toSize()
                 },
-            label = { Text("Select Difficulty") },
+            label = { Text(selectTitle) },
             enabled = false,
             trailingIcon = {
                 Icon(icon, "contentDescription",
-                    Modifier.clickable { mExpanded.value = !mExpanded.value })
+                    modifier.clickable { isExpanded.value = !isExpanded.value })
             }
         )
 
         // Create a drop-down menu with list of cities,
         // when clicked, set the Text Field text as the city selected
         DropdownMenu(
-            expanded = mExpanded.value,
-            onDismissRequest = { mExpanded.value = false },
-            modifier = Modifier
+            expanded = isExpanded.value,
+            onDismissRequest = { isExpanded.value = false },
+            modifier = modifier
                 .width(with(LocalDensity.current) { mTextFieldSize.value.width.toDp() })
         ) {
-            selectDifficulty.forEach { label ->
+            selectedList.forEach { label ->
                 DropdownMenuItem(onClick = {
-                    mSelectedText.value = label
-                    mExpanded.value = false
+                    initialSelected.value = label
+                    isExpanded.value = false
                 }) {
                     Text(text = label)
                 }
@@ -93,10 +125,20 @@ fun DropDownMenu() {
     }
 }
 
+@Composable
+fun ConfirmButton(label: String, modifier: Modifier, onClick: () -> Unit) {
+    Button(
+        modifier = modifier,
+        onClick = { onClick.invoke() }
+    ) {
+        Text(text = label)
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewPlayScreen() {
     QuizAppTheme {
-        SetUpScreen()
+        SetUpScreen(null)
     }
 }
