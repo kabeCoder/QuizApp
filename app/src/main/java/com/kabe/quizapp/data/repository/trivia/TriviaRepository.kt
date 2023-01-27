@@ -23,4 +23,8 @@ class TriviaRepository @Inject constructor(
     suspend fun getCachedTrivia(): Resource<List<Trivia>> = serviceCall {
         appDatabase.triviaDao().getAllCurrentTrivia()
     }
+
+    suspend fun deleteAllTrivia() {
+        appDatabase.triviaDao().deleteAllTrivia()
+    }
 }
