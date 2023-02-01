@@ -1,5 +1,7 @@
 package com.kabe.quizapp.ui.presentation.playscreen
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -13,6 +15,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringArrayResource
@@ -31,10 +34,10 @@ fun SetUpScreen(
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
         val (amount, category, difficulty, type, confirmButton) = createRefs()
 
-        var numberOfQuestions: String = ""
-        var categoryOfQuestions: String = ""
-        var difficultyOfQuestions: String = ""
-        var typeOfQuestions: String = ""
+        var numberOfQuestions = ""
+        var categoryOfQuestions = ""
+        var difficultyOfQuestions = ""
+        var typeOfQuestions = ""
 
         DropDownMenu(
             "Number of Questions",
@@ -171,21 +174,20 @@ fun DropDownMenu(
         )
 
         // Create a drop-down menu with list of cities,
-        // when clicked, set the Text Field text as the city selected
         DropdownMenu(
             expanded = isExpanded.value,
             onDismissRequest = { isExpanded.value = false },
             modifier = modifier
-                .width(with(LocalDensity.current) { mTextFieldSize.value.width.toDp() })
+                .width(with(LocalDensity.current) { mTextFieldSize.value.width.toDp() }),
         ) {
             selectedList.forEach { label ->
-                DropdownMenuItem(onClick = {
-                    initialSelected.value = label
-                    isExpanded.value = false
-                    onValueSelected.invoke(initialSelected.value)
-                }) {
-                    Text(text = label)
-                }
+                    DropdownMenuItem(onClick = {
+                        initialSelected.value = label
+                        isExpanded.value = false
+                        onValueSelected.invoke(initialSelected.value)
+                    }) {
+                        Text(text = label)
+                    }
             }
         }
     }
