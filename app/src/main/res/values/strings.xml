@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">QuizApp</string>
 
+    // Setup Screen
+    <string name="label_timer_in_seconds">Set timer </string>
+
     // Number of Questions
     <string-array name="number_of_questions">
         <item>5</item>

@@ -7,7 +7,6 @@ import android.os.Build
 import dagger.hilt.android.qualifiers.ApplicationContext
 
 object NetworkUtil {
-
     fun isNetworkAvailable(@ApplicationContext context: Context): Boolean {
 
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

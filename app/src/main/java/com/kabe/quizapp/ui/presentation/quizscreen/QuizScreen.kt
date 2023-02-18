@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kabe.quizapp.ui.presentation.destinations.ResultScreenDestination
+import com.kabe.quizapp.ui.presentation.quizscreen.views.CountdownTimer
 import com.kabe.quizapp.ui.theme.QuizAppTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -28,6 +29,7 @@ fun QuizScreen(
     category: Int,
     difficulty: String,
     type: String,
+    timer: Int,
     navigator: DestinationsNavigator?,
     viewModel: QuizScreenViewModel = hiltViewModel()
 ) {
@@ -39,6 +41,11 @@ fun QuizScreen(
     val currentTriviaIndex = remember {
         mutableStateOf(0)
     }
+
+    val currentScore = remember {
+        mutableStateOf(0)
+    }
+
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
 
         if (triviaList.isNotEmpty())
@@ -51,6 +58,11 @@ fun QuizScreen(
                     triviaList[min(currentTriviaIndex.value, triviaList.size - 1)].incorrectAnswers
                 val choices = incorrectAnswer.plus(correctAnswer)
                 Text(text = "Question: ")
+                Text(text = "Score: ${currentScore.value}" )
+                CountdownTimer(timeInSeconds = timer) {
+                    navigator?.navigate(ResultScreenDestination)
+                }
+
 
                 Card(
                     modifier = Modifier
@@ -78,7 +90,7 @@ fun QuizScreen(
                                 .weight(1f)
                                 .clickable {
                                     if (choice.toString() == correctAnswer)
-                                        Log.d("QuizScreen", "Tama")
+                                        currentScore.value++
                                     else
                                         Log.d("QuizScreen", "Mali")
 
@@ -103,6 +115,6 @@ fun QuizScreen(
 @Composable
 fun PreviewQuizScreen() {
     QuizAppTheme {
-        QuizScreen(0, 0, "", "", null)
+        QuizScreen(0, 0, "", "", 0,null)
     }
 }

@@ -9,7 +9,6 @@ import java.io.IOException
 object RetrofitBuilder {
 
     class NoInternetInterceptor(private val context: Context) : Interceptor {
-
         override fun intercept(chain: Interceptor.Chain): Response {
             return if (!NetworkUtil.isNetworkAvailable(context)) {
                 throw NoInternetException()
