@@ -1,9 +1,11 @@
 package com.kabe.quizapp.ui.presentation.playscreen
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.*
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.kabe.quizapp.ui.theme.QuizAppTheme
@@ -13,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
@@ -29,10 +32,10 @@ fun SetUpScreen(
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
         val (amount, category, difficulty, type, timer, confirmButton) = createRefs()
 
-        var numberOfQuestions = ""
-        var categoryOfQuestions = ""
-        var difficultyOfQuestions = ""
-        var typeOfQuestions = ""
+        val numberOfQuestions = remember { mutableStateOf("") }
+        val categoryOfQuestions = remember { mutableStateOf("") }
+        val difficultyOfQuestions = remember { mutableStateOf("") }
+        val typeOfQuestions = remember { mutableStateOf("") }
         val initialSelected = remember { mutableStateOf("") }
 
         DropDownMenu(
@@ -42,7 +45,7 @@ fun SetUpScreen(
                 top.linkTo(parent.top, margin = 16.dp)
 
             }) {
-            numberOfQuestions = it
+            numberOfQuestions.value = it
         }
 
         DropDownMenu(
@@ -51,7 +54,7 @@ fun SetUpScreen(
             modifier = Modifier.constrainAs(category) {
                 top.linkTo(amount.bottom, margin = 16.dp)
             }) {
-            categoryOfQuestions = when (it) {
+            categoryOfQuestions.value = when (it) {
                 "Any Category" -> ""
                 "General Knowledge" -> "9"
                 "Entertainment: Books" -> "10"
@@ -87,7 +90,7 @@ fun SetUpScreen(
             modifier = Modifier.constrainAs(difficulty) {
                 top.linkTo(category.bottom, margin = 16.dp)
             }) {
-            difficultyOfQuestions = when (it) {
+            difficultyOfQuestions.value = when (it) {
                 "Any Difficulty" -> ""
                 "Easy" -> "easy"
                 "Medium" -> "medium"
@@ -101,7 +104,7 @@ fun SetUpScreen(
             stringArrayResource(id = R.array.type), modifier = Modifier.constrainAs(type) {
                 top.linkTo(difficulty.bottom, margin = 16.dp)
             }) {
-            typeOfQuestions = when (it) {
+            typeOfQuestions.value = when (it) {
                 "Any Type" -> ""
                 "Multiple Choice" -> "multiple"
                 "True / False" -> "boolean"
@@ -118,6 +121,9 @@ fun SetUpScreen(
                 .constrainAs(timer) {
                     top.linkTo(type.bottom, margin = 16.dp)
                 },
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Number
+            ),
             label = { Text(text = stringResource(id = R.string.label_timer_in_seconds)) },
         )
 
@@ -127,10 +133,10 @@ fun SetUpScreen(
         }) {
             navigator?.navigate(
                 QuizScreenDestination(
-                    numberOfQuestions.toInt(),
-                    categoryOfQuestions.toInt(),
-                    difficultyOfQuestions,
-                    typeOfQuestions,
+                    numberOfQuestions.value.toInt(),
+                    categoryOfQuestions.value.toInt(),
+                    difficultyOfQuestions.value,
+                    typeOfQuestions.value,
                     initialSelected.value.toInt()
                 )
             )

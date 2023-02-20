@@ -1,5 +1,6 @@
 package com.kabe.quizapp.ui.presentation.quizscreen
 
+import android.text.Html
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -70,7 +71,7 @@ fun QuizScreen(
                         .fillMaxWidth()
                 ) {
                     Text(
-                        text = questions,
+                        text = Html.fromHtml(questions, Html.FROM_HTML_MODE_LEGACY).toString(),
                         modifier = Modifier
                             .padding(16.dp)
                     )
@@ -78,9 +79,9 @@ fun QuizScreen(
                 Text(text = "Correct Answer: ")
                 Text(text = correctAnswer.toString())
                 Text(text = "Wrong Answer: ")
-                Text(text = incorrectAnswer.toString())
+                Text(text = Html.fromHtml(incorrectAnswer.toString(), Html.FROM_HTML_MODE_LEGACY).toString())
                 Text(text = "Choices: ")
-                Text(text = choices.toString())
+                Text(text = Html.fromHtml(choices.toString(), Html.FROM_HTML_MODE_LEGACY).toString())
 
                 choices.shuffled().chunked(2).forEach { chunk ->
                     Row(modifier = Modifier.fillMaxWidth()) {

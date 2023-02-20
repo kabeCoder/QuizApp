@@ -8,7 +8,6 @@ import retrofit2.HttpException
 import java.net.UnknownHostException
 
 abstract class BaseRepository {
-
     inline fun <T> serviceCall(callFunction: () -> T): Resource<T> = try {
         Resource.success(callFunction())
     } catch (e: Exception) {
