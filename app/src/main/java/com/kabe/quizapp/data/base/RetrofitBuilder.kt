@@ -2,9 +2,9 @@ package com.kabe.quizapp.data.base
 
 import android.content.Context
 import com.kabe.quizapp.util.NetworkUtil
+import java.io.IOException
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.io.IOException
 
 object RetrofitBuilder {
 

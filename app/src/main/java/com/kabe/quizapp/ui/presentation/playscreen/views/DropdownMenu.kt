@@ -5,11 +5,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.*
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.Icon
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -25,14 +30,11 @@ fun DropDownMenu(
     selectTitle: String,
     selectedList: Array<String>,
     modifier: Modifier = Modifier,
+    isExpanded: MutableState<Boolean>,
+    initialSelected: MutableState<String>,
+    textFieldSize: MutableState<Size>,
     onValueSelected: (String) -> Unit
 ) {
-
-    val isExpanded = remember { mutableStateOf(false) }
-
-    val initialSelected = remember { mutableStateOf("") }
-
-    val mTextFieldSize = remember { mutableStateOf(Size.Zero) }
 
     val icon = if (isExpanded.value)
         Icons.Filled.KeyboardArrowUp
@@ -47,7 +49,7 @@ fun DropDownMenu(
             modifier = modifier
                 .fillMaxWidth()
                 .onGloballyPositioned { coordinates ->
-                    mTextFieldSize.value = coordinates.size.toSize()
+                    textFieldSize.value = coordinates.size.toSize()
                 },
             label = { Text(selectTitle) },
             enabled = false,
@@ -61,7 +63,7 @@ fun DropDownMenu(
             expanded = isExpanded.value,
             onDismissRequest = { isExpanded.value = false },
             modifier = modifier
-                .width(with(LocalDensity.current) { mTextFieldSize.value.width.toDp() }),
+                .width(with(LocalDensity.current) { textFieldSize.value.width.toDp() }),
         ) {
             selectedList.forEach { label ->
                 DropdownMenuItem(onClick = {
@@ -81,6 +83,18 @@ fun DropDownMenu(
 fun PreviewDropdownMenu() {
     DropDownMenu(
         selectTitle = "Dropdown",
-        selectedList = arrayOf("",""),
-        onValueSelected = {} )
+        selectedList = arrayOf("", ""),
+        isExpanded = remember {
+            mutableStateOf(false)
+        },
+        initialSelected = remember {
+            mutableStateOf("")
+        },
+        textFieldSize = remember {
+            mutableStateOf(Size.Zero)
+        },
+        onValueSelected = {
+
+        }
+    )
 }

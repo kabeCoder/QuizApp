@@ -4,8 +4,8 @@ import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
 import com.kabe.quizapp.BuildConfig
-import retrofit2.HttpException
 import java.net.UnknownHostException
+import retrofit2.HttpException
 
 abstract class BaseRepository {
     inline fun <T> serviceCall(callFunction: () -> T): Resource<T> = try {

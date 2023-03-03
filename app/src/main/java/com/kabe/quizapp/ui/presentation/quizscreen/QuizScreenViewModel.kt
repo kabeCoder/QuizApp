@@ -6,9 +6,11 @@ import com.kabe.quizapp.data.base.Status
 import com.kabe.quizapp.data.repository.trivia.TriviaRepository
 import com.kabe.quizapp.domain.Trivia
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class QuizScreenViewModel @Inject constructor(

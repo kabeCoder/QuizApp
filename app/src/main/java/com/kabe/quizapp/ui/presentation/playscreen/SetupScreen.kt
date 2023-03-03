@@ -1,27 +1,29 @@
 package com.kabe.quizapp.ui.presentation.playscreen
 
-import android.util.Log
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.runtime.*
-import androidx.constraintlayout.compose.ConstraintLayout
-import com.kabe.quizapp.ui.theme.QuizAppTheme
-import com.ramcosta.composedestinations.annotation.Destination
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.toSize
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.kabe.quizapp.R
 import com.kabe.quizapp.ui.presentation.destinations.QuizScreenDestination
 import com.kabe.quizapp.ui.presentation.playscreen.views.DropDownMenu
+import com.kabe.quizapp.ui.theme.QuizAppTheme
+import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination
@@ -32,11 +34,7 @@ fun SetUpScreen(
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
         val (amount, category, difficulty, type, timer, confirmButton) = createRefs()
 
-        val numberOfQuestions = remember { mutableStateOf("") }
-        val categoryOfQuestions = remember { mutableStateOf("") }
-        val difficultyOfQuestions = remember { mutableStateOf("") }
-        val typeOfQuestions = remember { mutableStateOf("") }
-        val initialSelected = remember { mutableStateOf("") }
+        val setUpScreenState = rememberSetupScreenState()
 
         DropDownMenu(
             "Number of Questions",
@@ -44,8 +42,12 @@ fun SetUpScreen(
             modifier = Modifier.constrainAs(amount) {
                 top.linkTo(parent.top, margin = 16.dp)
 
-            }) {
-            numberOfQuestions.value = it
+            },
+            isExpanded = setUpScreenState.questionsIsExpandedValue,
+            initialSelected = setUpScreenState.questionsInitialSelectedValue,
+            textFieldSize = setUpScreenState.questionsTextFieldSizeValue
+        ) {
+            setUpScreenState.numberOfQuestions.value = it
         }
 
         DropDownMenu(
@@ -53,8 +55,12 @@ fun SetUpScreen(
             stringArrayResource(id = R.array.category),
             modifier = Modifier.constrainAs(category) {
                 top.linkTo(amount.bottom, margin = 16.dp)
-            }) {
-            categoryOfQuestions.value = when (it) {
+            },
+            isExpanded = setUpScreenState.categoryIsExpandedValue,
+            initialSelected = setUpScreenState.categoryInitialSelectedValue,
+            textFieldSize = setUpScreenState.categoryTextFieldSizeValue
+        ) {
+            setUpScreenState.categoryOfQuestions.value = when (it) {
                 "Any Category" -> ""
                 "General Knowledge" -> "9"
                 "Entertainment: Books" -> "10"
@@ -89,8 +95,12 @@ fun SetUpScreen(
             stringArrayResource(id = R.array.difficulty),
             modifier = Modifier.constrainAs(difficulty) {
                 top.linkTo(category.bottom, margin = 16.dp)
-            }) {
-            difficultyOfQuestions.value = when (it) {
+            },
+            isExpanded = setUpScreenState.difficultyIsExpandedValue,
+            initialSelected = setUpScreenState.difficultyInitialSelectedValue,
+            textFieldSize = setUpScreenState.difficultyTextFieldSizeValue
+        ) {
+            setUpScreenState.difficultyOfQuestions.value = when (it) {
                 "Any Difficulty" -> ""
                 "Easy" -> "easy"
                 "Medium" -> "medium"
@@ -103,8 +113,12 @@ fun SetUpScreen(
             "Type",
             stringArrayResource(id = R.array.type), modifier = Modifier.constrainAs(type) {
                 top.linkTo(difficulty.bottom, margin = 16.dp)
-            }) {
-            typeOfQuestions.value = when (it) {
+            },
+            isExpanded = setUpScreenState.typeIsExpandedValue,
+            initialSelected = setUpScreenState.typeInitialSelectedValue,
+            textFieldSize = setUpScreenState.typeTextFieldSizeValue
+        ) {
+            setUpScreenState.typeOfQuestions.value = when (it) {
                 "Any Type" -> ""
                 "Multiple Choice" -> "multiple"
                 "True / False" -> "boolean"
@@ -113,8 +127,8 @@ fun SetUpScreen(
         }
 
         OutlinedTextField(
-            value = initialSelected.value,
-            onValueChange = { initialSelected.value = it },
+            value = setUpScreenState.initialSelected.value,
+            onValueChange = { setUpScreenState.initialSelected.value = it },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(20.dp)
@@ -133,11 +147,11 @@ fun SetUpScreen(
         }) {
             navigator?.navigate(
                 QuizScreenDestination(
-                    numberOfQuestions.value.toInt(),
-                    categoryOfQuestions.value.toInt(),
-                    difficultyOfQuestions.value,
-                    typeOfQuestions.value,
-                    initialSelected.value.toInt()
+                    setUpScreenState.numberOfQuestions.value.toInt(),
+                    setUpScreenState.categoryOfQuestions.value.toInt(),
+                    setUpScreenState.difficultyOfQuestions.value,
+                    setUpScreenState.typeOfQuestions.value,
+                    setUpScreenState.initialSelected.value.toInt()
                 )
             )
         }
@@ -152,6 +166,65 @@ fun ConfirmButton(label: String, modifier: Modifier, onClick: () -> Unit) {
     ) {
         Text(text = label)
     }
+}
+
+@Composable
+fun rememberSetupScreenState(
+    questionsIsExpandedValue: MutableState<Boolean> = mutableStateOf(false),
+    questionsInitialSelectedValue: MutableState<String> = mutableStateOf(""),
+    questionsTextFieldSizeValue: MutableState<Size> = mutableStateOf(Size.Zero),
+    categoryIsExpandedValue: MutableState<Boolean> = mutableStateOf(false),
+    categoryInitialSelectedValue: MutableState<String> = mutableStateOf(""),
+    categoryTextFieldSizeValue: MutableState<Size> = mutableStateOf(Size.Zero),
+    difficultyIsExpandedValue: MutableState<Boolean> = mutableStateOf(false),
+    difficultyInitialSelectedValue: MutableState<String> = mutableStateOf(""),
+    difficultyTextFieldSizeValue: MutableState<Size> = mutableStateOf(Size.Zero),
+    typeIsExpandedValue: MutableState<Boolean> = mutableStateOf(false),
+    typeInitialSelectedValue: MutableState<String> = mutableStateOf(""),
+    typeTextFieldSizeValue: MutableState<Size> = mutableStateOf(Size.Zero),
+    numberOfQuestions: MutableState<String> = mutableStateOf(""),
+    categoryOfQuestions: MutableState<String> = mutableStateOf(""),
+    difficultyOfQuestions: MutableState<String> = mutableStateOf(""),
+    typeOfQuestions: MutableState<String> = mutableStateOf(""),
+    initialSelected: MutableState<String> = mutableStateOf("")
+) = remember(
+    questionsIsExpandedValue,
+    questionsInitialSelectedValue,
+    questionsTextFieldSizeValue,
+    categoryIsExpandedValue,
+    categoryInitialSelectedValue,
+    categoryTextFieldSizeValue,
+    difficultyIsExpandedValue,
+    difficultyInitialSelectedValue,
+    difficultyTextFieldSizeValue,
+    typeIsExpandedValue,
+    typeInitialSelectedValue,
+    typeTextFieldSizeValue,
+    numberOfQuestions,
+    categoryOfQuestions,
+    difficultyOfQuestions,
+    typeOfQuestions,
+    initialSelected
+) {
+    SetupScreenState(
+        questionsIsExpandedValue,
+        questionsInitialSelectedValue,
+        questionsTextFieldSizeValue,
+        categoryIsExpandedValue,
+        categoryInitialSelectedValue,
+        categoryTextFieldSizeValue,
+        difficultyIsExpandedValue,
+        difficultyInitialSelectedValue,
+        difficultyTextFieldSizeValue,
+        typeIsExpandedValue,
+        typeInitialSelectedValue,
+        typeTextFieldSizeValue,
+        numberOfQuestions,
+        categoryOfQuestions,
+        difficultyOfQuestions,
+        typeOfQuestions,
+        initialSelected
+    )
 }
 
 @Preview(showBackground = true)
