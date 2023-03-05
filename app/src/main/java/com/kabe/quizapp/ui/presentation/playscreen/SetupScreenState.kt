@@ -22,7 +22,6 @@ class SetupScreenState(
     val numberOfQuestions: MutableState<String>,
     val categoryOfQuestions: MutableState<String>,
     val difficultyOfQuestions: MutableState<String>,
-    val typeOfQuestions: MutableState<String>,
-    val initialSelected: MutableState<String>
+    val typeOfQuestions: MutableState<String>
 
 )

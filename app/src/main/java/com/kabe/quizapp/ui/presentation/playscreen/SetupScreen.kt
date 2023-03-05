@@ -32,7 +32,7 @@ fun SetUpScreen(
     navigator: DestinationsNavigator?
 ) {
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
-        val (amount, category, difficulty, type, timer, confirmButton) = createRefs()
+        val (amount, category, difficulty, type, confirmButton) = createRefs()
 
         val setUpScreenState = rememberSetupScreenState()
 
@@ -126,23 +126,8 @@ fun SetUpScreen(
             }
         }
 
-        OutlinedTextField(
-            value = setUpScreenState.initialSelected.value,
-            onValueChange = { setUpScreenState.initialSelected.value = it },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-                .constrainAs(timer) {
-                    top.linkTo(type.bottom, margin = 16.dp)
-                },
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Number
-            ),
-            label = { Text(text = stringResource(id = R.string.label_timer_in_seconds)) },
-        )
-
         ConfirmButton(label = "Confirm", modifier = Modifier.constrainAs(confirmButton) {
-            top.linkTo(timer.bottom, margin = 16.dp)
+            top.linkTo(type.bottom, margin = 16.dp)
             centerHorizontallyTo(parent)
         }) {
             navigator?.navigate(
@@ -151,7 +136,7 @@ fun SetUpScreen(
                     setUpScreenState.categoryOfQuestions.value.toInt(),
                     setUpScreenState.difficultyOfQuestions.value,
                     setUpScreenState.typeOfQuestions.value,
-                    setUpScreenState.initialSelected.value.toInt()
+                    120
                 )
             )
         }
@@ -185,8 +170,7 @@ fun rememberSetupScreenState(
     numberOfQuestions: MutableState<String> = mutableStateOf(""),
     categoryOfQuestions: MutableState<String> = mutableStateOf(""),
     difficultyOfQuestions: MutableState<String> = mutableStateOf(""),
-    typeOfQuestions: MutableState<String> = mutableStateOf(""),
-    initialSelected: MutableState<String> = mutableStateOf("")
+    typeOfQuestions: MutableState<String> = mutableStateOf("")
 ) = remember(
     questionsIsExpandedValue,
     questionsInitialSelectedValue,
@@ -203,8 +187,7 @@ fun rememberSetupScreenState(
     numberOfQuestions,
     categoryOfQuestions,
     difficultyOfQuestions,
-    typeOfQuestions,
-    initialSelected
+    typeOfQuestions
 ) {
     SetupScreenState(
         questionsIsExpandedValue,
@@ -222,8 +205,7 @@ fun rememberSetupScreenState(
         numberOfQuestions,
         categoryOfQuestions,
         difficultyOfQuestions,
-        typeOfQuestions,
-        initialSelected
+        typeOfQuestions
     )
 }
 
