@@ -1,4 +1,4 @@
-package com.kabe.quizapp.ui.presentation
+package com.kabe.quizapp
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

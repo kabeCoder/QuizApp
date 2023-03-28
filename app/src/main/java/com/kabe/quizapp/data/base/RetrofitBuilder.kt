@@ -18,7 +18,7 @@ object RetrofitBuilder {
             }
         }
 
-        inner class NoInternetException() : IOException("No internet connection")
+        inner class NoInternetException : IOException("No internet connection")
 
     }
 

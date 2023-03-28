@@ -1,4 +1,4 @@
-package com.kabe.quizapp.ui.presentation.resultscreen
+package com.kabe.quizapp.resultscreen
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text

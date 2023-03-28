@@ -1,4 +1,4 @@
-package com.kabe.quizapp.ui.presentation.quizscreen.views
+package com.kabe.quizapp.quizscreen.views
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable

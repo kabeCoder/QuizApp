@@ -1,4 +1,4 @@
-package com.kabe.quizapp.ui.presentation.resultscreen
+package com.kabe.quizapp.resultscreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

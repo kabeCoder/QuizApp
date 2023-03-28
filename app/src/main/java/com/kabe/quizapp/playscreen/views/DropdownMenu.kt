@@ -1,4 +1,4 @@
-package com.kabe.quizapp.ui.presentation.playscreen.views
+package com.kabe.quizapp.playscreen.views
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

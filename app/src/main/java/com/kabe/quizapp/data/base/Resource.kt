@@ -10,7 +10,11 @@ data class Resource<out T>(
         fun <T> success(data: T, message: String? = null): Resource<T> =
             Resource(status = Status.SUCCESS, data = data, message = message, exception = null)
 
-        fun <T> error(data: T?, message: String, exception: BaseRepository.ServiceException): Resource<T> =
+        fun <T> error(
+            data: T?,
+            message: String,
+            exception: BaseRepository.ServiceException
+        ): Resource<T> =
             Resource(status = Status.ERROR, data = data, message = message, exception = exception)
     }
 }

@@ -1,4 +1,4 @@
-package com.kabe.quizapp.ui.presentation.quizscreen
+package com.kabe.quizapp.quizscreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,15 +20,15 @@ class QuizScreenViewModel @Inject constructor(
     private val _errorMessage = MutableSharedFlow<String?>()
     val errorMessage: SharedFlow<String?> = _errorMessage.asSharedFlow()
 
-   private val triviaList = mutableListOf<Trivia>()
-   private val _trivia = MutableSharedFlow<MutableList<Trivia>>()
+    private val triviaList = mutableListOf<Trivia>()
+    private val _trivia = MutableSharedFlow<MutableList<Trivia>>()
     val trivia: SharedFlow<List<Trivia>> = _trivia.asSharedFlow()
 
 
     fun getTrivia(amount: Int, category: Int, difficulty: String, type: String) {
         viewModelScope.launch {
-            val triviaResult = triviaRepository.getTrivia(amount,category,difficulty,type)
-            when(triviaResult.status) {
+            val triviaResult = triviaRepository.getTrivia(amount, category, difficulty, type)
+            when (triviaResult.status) {
                 Status.SUCCESS -> triviaResult.data?.let { trivia ->
                     _trivia.emit(trivia.toMutableList())
                 }

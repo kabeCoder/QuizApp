@@ -1,8 +1,6 @@
-package com.kabe.quizapp.ui.presentation.playscreen
+package com.kabe.quizapp.playscreen
 
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Size
 
 

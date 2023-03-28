@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">QuizApp</string>
 
+    // Start Screen
+    <string name="label_play">Play</string>
+    <string name="label_exit">Exit</string>
+
+
     // Setup Screen
-    <string name="label_timer_in_seconds">Set timer </string>
+    <string name="label_timer_in_seconds">Set timer</string>
 
     // Number of Questions
     <string-array name="number_of_questions">

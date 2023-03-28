@@ -1,4 +1,4 @@
-package com.kabe.quizapp.ui.presentation.quizscreen
+package com.kabe.quizapp.quizscreen
 
 import android.text.Html
 import android.util.Log
@@ -20,8 +20,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.kabe.quizapp.ui.presentation.destinations.ResultScreenDestination
-import com.kabe.quizapp.ui.presentation.quizscreen.views.CountdownTimer
+import com.kabe.quizapp.destinations.ResultScreenDestination
+import com.kabe.quizapp.quizscreen.views.CountdownTimer
 import com.kabe.quizapp.ui.theme.QuizAppTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -63,9 +63,9 @@ fun QuizScreen(
                     triviaList[min(currentTriviaIndex.value, triviaList.size - 1)].incorrectAnswers
                 val choices = incorrectAnswer.plus(correctAnswer)
                 Text(text = "Question: ")
-                Text(text = "Score: ${currentScore.value}" )
+                Text(text = "Score: ${currentScore.value}")
                 CountdownTimer(timeInSeconds = timer) {
-                    navigator?.navigate(ResultScreenDestination)
+                    //navigator?.navigate(ResultScreenDestination)
                 }
 
 
@@ -83,9 +83,14 @@ fun QuizScreen(
                 Text(text = "Correct Answer: ")
                 Text(text = correctAnswer.toString())
                 Text(text = "Wrong Answer: ")
-                Text(text = Html.fromHtml(incorrectAnswer.toString(), Html.FROM_HTML_MODE_LEGACY).toString())
+                Text(
+                    text = Html.fromHtml(incorrectAnswer.toString(), Html.FROM_HTML_MODE_LEGACY)
+                        .toString()
+                )
                 Text(text = "Choices: ")
-                Text(text = Html.fromHtml(choices.toString(), Html.FROM_HTML_MODE_LEGACY).toString())
+                Text(
+                    text = Html.fromHtml(choices.toString(), Html.FROM_HTML_MODE_LEGACY).toString()
+                )
 
                 choices.shuffled().chunked(2).forEach { chunk ->
                     Row(modifier = Modifier.fillMaxWidth()) {
@@ -120,6 +125,6 @@ fun QuizScreen(
 @Composable
 fun PreviewQuizScreen() {
     QuizAppTheme {
-        QuizScreen(0, 0, "", "", 0,null)
+        QuizScreen(0, 0, "", "", 0, null)
     }
 }
