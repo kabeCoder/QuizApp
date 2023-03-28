@@ -53,17 +53,17 @@ val PoppinsTypography = Typography(
     h4 = TextStyle(
         fontFamily = Poppins,
         fontWeight = FontWeight.W600,
-        fontSize = 14.sp
+        fontSize = 16.sp
     ),
     h5 = TextStyle(
         fontFamily = Poppins,
         fontWeight = FontWeight.W500,
-        fontSize = 12.sp
+        fontSize = 14.sp
     ),
     h6 = TextStyle(
         fontFamily = Poppins,
         fontWeight = FontWeight.W600,
-        fontSize = 14.sp
+        fontSize = 12.sp
     ),
     subtitle1 = TextStyle(
         fontFamily = Poppins,

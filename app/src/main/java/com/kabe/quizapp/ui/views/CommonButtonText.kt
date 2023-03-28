@@ -43,7 +43,7 @@ fun CommonButtonText(
         ) {
             Text(
                 text = buttonName,
-                modifier  = Modifier.padding(12.dp),
+                modifier = Modifier.padding(12.dp),
                 style = textStyle
             )
         }
@@ -55,7 +55,7 @@ fun CommonButtonText(
 fun CommonButtonPreview() {
     CommonButtonText(
         buttonName = stringResource(id = R.string.label_preview_button),
-        textStyle = MaterialTheme.typography.h4.copy(
+        textStyle = MaterialTheme.typography.h5.copy(
             fontSize = 14.sp,
             color = White,
             fontWeight = FontWeight.W600
