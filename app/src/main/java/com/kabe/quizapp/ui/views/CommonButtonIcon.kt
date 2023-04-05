@@ -1,5 +1,6 @@
 package com.kabe.quizapp.ui.views
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -27,7 +28,7 @@ fun CommonButtonIcon(
     buttonColor: ButtonColors,
     onClick: () -> Unit
 ) {
-    ConstraintLayout(
+    Column(
         modifier = modifier
             .fillMaxSize()
     ) {

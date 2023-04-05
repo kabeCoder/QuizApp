@@ -5,6 +5,7 @@
     <string name="label_preview_button">Common Button</string>
     <string name="label_preview_textField_label">Common TextField Label</string>
     <string name="label_preview_textField_content">Common TextField Text</string>
+    <string name="label_preview_transparent_shadow">Transparent Shadow Text</string>
 
     // Content Description
     <string name="label_icon_button_description">Icon Description</string>
