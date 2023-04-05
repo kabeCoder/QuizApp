@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -106,6 +107,7 @@ fun CommonClickableTextFieldWithLabel(
                         modifier = Modifier
                             .width(10.dp)
                             .height(10.dp)
+                            .rotate(if (!showDropdown) 0f else 180f)
                     )
 
                 }
@@ -124,7 +126,12 @@ fun CommonClickableTextFieldWithLabel(
                     dropdownList.forEach { list ->
                         Text(
                             text = list,
-                            modifier = Modifier.padding(12.dp)
+                            modifier = Modifier.padding(12.dp),
+                            style = MaterialTheme.typography.h5.copy(
+                                fontSize = 14.sp,
+                                color = Black.copy(0.5f),
+                                fontWeight = FontWeight.W600
+                            )
                         )
                     }
                 }
