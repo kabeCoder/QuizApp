@@ -10,11 +10,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -34,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import com.kabe.quizapp.R
 import com.kabe.quizapp.ui.theme.Black
 import com.kabe.quizapp.ui.theme.Gray1
@@ -110,20 +111,13 @@ fun CommonClickableTextFieldWithLabel(
                 }
             }
         )
-        if (showDropdown)
+        if (showDropdown) {
             Box(
                 modifier = Modifier
+                    .padding(2.dp)
+                    .clip(shape = RoundedCornerShape(10.dp))
+                    .background(Color.White)
                     .fillMaxWidth()
-                    .shadow(
-                        elevation = 1.dp,
-                        shape = RoundedCornerShape(10.dp),
-                        clip = false,
-                    )
-                    .border(
-                        width = 1.dp,
-                        color = Color.Transparent,
-                        shape = RoundedCornerShape(15.dp)
-                    )
 
             ) {
                 Column {
@@ -136,6 +130,34 @@ fun CommonClickableTextFieldWithLabel(
                 }
             }
 
+            Box(
+                modifier = Modifier
+                    .offset(y = -(172.5).dp)
+                    .zIndex(-1f)
+                    .shadow(
+                        elevation = 1.dp,
+                        shape = RoundedCornerShape(10.dp),
+                        clip = false,
+                    )
+                    .border(
+                        width = 1.dp,
+                        color = Color.Transparent,
+                        shape = RoundedCornerShape(15.dp)
+                    )
+                    .fillMaxWidth()
+
+            ) {
+                Column {
+                    dropdownList.forEach { list ->
+                        Text(
+                            text = list,
+                            color = Color.Transparent,
+                            modifier = Modifier.padding(12.dp)
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 
