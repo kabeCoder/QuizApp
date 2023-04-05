@@ -132,11 +132,11 @@ fun CommonClickableTextFieldWithLabel(
 
             Box(
                 modifier = Modifier
-                    .offset(y = -(172.5).dp)
+                    .offset(y = -(170).dp)
                     .zIndex(-1f)
                     .shadow(
-                        elevation = 1.dp,
-                        shape = RoundedCornerShape(10.dp),
+                        elevation = 3.dp,
+                        shape = RoundedCornerShape(15.dp),
                         clip = false,
                     )
                     .border(
