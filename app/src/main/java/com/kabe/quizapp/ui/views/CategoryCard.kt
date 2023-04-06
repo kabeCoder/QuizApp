@@ -5,7 +5,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -21,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -32,8 +30,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.kabe.quizapp.R
-import com.kabe.quizapp.ui.theme.Black
 import com.kabe.quizapp.ui.theme.Pink
+import com.kabe.quizapp.ui.theme.spacing
 
 @Composable
 fun CategoryCard(
@@ -41,16 +39,15 @@ fun CategoryCard(
     label: String,
     labelColor: Color,
     onClick: () -> Unit
-
 ) {
     ConstraintLayout(
         modifier = Modifier
-            .padding(16.dp)
+            .padding(MaterialTheme.spacing.medium)
     ) {
         Box(
             modifier = Modifier
                 .padding(
-                    2.dp
+                    MaterialTheme.spacing.customSpacingTwo
                 )
                 .clip(shape = RoundedCornerShape(10.dp))
                 .background(Color.White)
@@ -67,13 +64,13 @@ fun CategoryCard(
                     painter = painter,
                     contentDescription = "",
                     modifier = Modifier
-                        .offset(x = 18.dp)
+                        .offset(x = MaterialTheme.spacing.medium + MaterialTheme.spacing.customSpacingTwo)
                         .size(75.dp),
                     tint = Pink
                 )
                 Text(
                     text = label,
-                    modifier = Modifier.padding(12.dp),
+                    modifier = Modifier.padding(MaterialTheme.spacing.small + MaterialTheme.spacing.extraSmall),
                     style = MaterialTheme.typography.h5.copy(
                         fontSize = 14.sp,
                         color = labelColor,
@@ -85,10 +82,10 @@ fun CategoryCard(
 
         Box(
             modifier = Modifier
-                .offset(y = 5.dp)
+                .offset(y = MaterialTheme.spacing.extraSmall + MaterialTheme.spacing.customSpacingTwo)
                 .zIndex(-1f)
                 .shadow(
-                    elevation = 3.dp,
+                    elevation = 4.dp,
                     shape = RoundedCornerShape(10.dp),
                     clip = false
                 )
@@ -104,7 +101,7 @@ fun CategoryCard(
                 Text(
                     text = stringResource(id = R.string.label_transparent_shadow),
                     color = Color.Transparent,
-                    modifier = Modifier.padding(12.dp)
+                    modifier = Modifier.padding(MaterialTheme.spacing.small + MaterialTheme.spacing.extraSmall)
                 )
             }
         }

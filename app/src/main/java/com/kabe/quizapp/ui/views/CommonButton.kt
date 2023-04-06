@@ -30,6 +30,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.kabe.quizapp.R
 import com.kabe.quizapp.ui.theme.Blue
 import com.kabe.quizapp.ui.theme.White
+import com.kabe.quizapp.ui.theme.spacing
 
 @Composable
 fun CommonButton(
@@ -37,12 +38,12 @@ fun CommonButton(
     buttonName: String,
     textStyle: TextStyle,
     buttonColor: ButtonColors,
-    backgroundOffset: Dp = 28.dp,
+    backgroundOffset: Dp = MaterialTheme.spacing.large - MaterialTheme.spacing.extraSmall,
     onClick: () -> Unit
 ) {
     ConstraintLayout(
         modifier = modifier
-            .padding(16.dp)
+            .padding(MaterialTheme.spacing.medium)
     ) {
         Button(
             onClick = { onClick.invoke() },

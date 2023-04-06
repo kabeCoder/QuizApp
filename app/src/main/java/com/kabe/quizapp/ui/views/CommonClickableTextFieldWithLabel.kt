@@ -39,6 +39,7 @@ import androidx.compose.ui.zIndex
 import com.kabe.quizapp.R
 import com.kabe.quizapp.ui.theme.Black
 import com.kabe.quizapp.ui.theme.Gray1
+import com.kabe.quizapp.ui.theme.spacing
 
 @Composable
 fun CommonClickableTextFieldWithLabel(
@@ -58,7 +59,7 @@ fun CommonClickableTextFieldWithLabel(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(12.dp)
+            .padding(MaterialTheme.spacing.small + MaterialTheme.spacing.extraSmall)
     ) {
 
         val textFieldValue = remember {
@@ -75,7 +76,7 @@ fun CommonClickableTextFieldWithLabel(
             onValueChange = {},
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp)
+                .padding(top = MaterialTheme.spacing.small)
                 .border(
                     width = 1.dp,
                     color = Gray1,
@@ -85,7 +86,7 @@ fun CommonClickableTextFieldWithLabel(
                     color = Gray1.copy(alpha = 0.2f),
                     shape = RoundedCornerShape(15.dp)
                 )
-                .padding(12.dp)
+                .padding(MaterialTheme.spacing.small + MaterialTheme.spacing.extraSmall)
                 .clickable {
                     onClick.invoke(showDropdown)
                 },
@@ -116,7 +117,7 @@ fun CommonClickableTextFieldWithLabel(
         if (showDropdown) {
             Box(
                 modifier = Modifier
-                    .padding(2.dp)
+                    .padding(MaterialTheme.spacing.customSpacingTwo)
                     .clip(shape = RoundedCornerShape(10.dp))
                     .background(Color.White)
                     .fillMaxWidth()
@@ -126,7 +127,7 @@ fun CommonClickableTextFieldWithLabel(
                     dropdownList.forEach { list ->
                         Text(
                             text = list,
-                            modifier = Modifier.padding(12.dp),
+                            modifier = Modifier.padding(MaterialTheme.spacing.small + MaterialTheme.spacing.extraSmall),
                             style = MaterialTheme.typography.h5.copy(
                                 fontSize = 14.sp,
                                 color = Black.copy(0.5f),
@@ -142,7 +143,7 @@ fun CommonClickableTextFieldWithLabel(
                     .offset(y = -(170).dp)
                     .zIndex(-1f)
                     .shadow(
-                        elevation = 3.dp,
+                        elevation = 4.dp,
                         shape = RoundedCornerShape(15.dp),
                         clip = false,
                     )
@@ -159,7 +160,7 @@ fun CommonClickableTextFieldWithLabel(
                         Text(
                             text = list,
                             color = Color.Transparent,
-                            modifier = Modifier.padding(12.dp)
+                            modifier = Modifier.padding(MaterialTheme.spacing.small + MaterialTheme.spacing.extraSmall)
                         )
                     }
                 }

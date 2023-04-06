@@ -27,7 +27,15 @@ fun SetUpScreen(
     navigator: DestinationsNavigator?
 ) {
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
-        val (boxHeader, amount, category, difficulty, type, confirmButton) = createRefs()
+        val (
+            boxHeader,
+            btnBack,
+            amount,
+            category,
+            difficulty,
+            type,
+            confirmButton
+        ) = createRefs()
 
         val setUpScreenState = rememberSetupScreenState()
 
@@ -42,6 +50,7 @@ fun SetUpScreen(
                 .height(200.dp)
                 .fillMaxWidth()
         ) {
+
         }
 
 //        DropDownMenu(

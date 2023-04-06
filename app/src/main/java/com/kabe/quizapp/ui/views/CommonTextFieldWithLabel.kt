@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import com.kabe.quizapp.R
 import com.kabe.quizapp.ui.theme.Black
 import com.kabe.quizapp.ui.theme.Gray1
+import com.kabe.quizapp.ui.theme.spacing
 
 @Composable
 fun CommonTextFieldWithLabel(
@@ -54,13 +55,13 @@ fun CommonTextFieldWithLabel(
             onValueChange = {},
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 4.dp)
+                .padding(top = MaterialTheme.spacing.extraSmall)
                 .border(
                     width = 1.dp,
                     color = Gray1,
                     shape = RoundedCornerShape(15.dp)
                 )
-                .padding(12.dp),
+                .padding(MaterialTheme.spacing.small + MaterialTheme.spacing.extraSmall),
             enabled = false,
             textStyle = MaterialTheme.typography.h5.copy(
                 fontSize = 14.sp,
