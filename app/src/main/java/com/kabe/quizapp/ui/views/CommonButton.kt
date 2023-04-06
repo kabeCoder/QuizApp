@@ -1,6 +1,5 @@
 package com.kabe.quizapp.ui.views
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,30 +16,33 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.kabe.quizapp.R
 import com.kabe.quizapp.ui.theme.Blue
 import com.kabe.quizapp.ui.theme.White
 
 @Composable
-fun CommonButtonText(
+fun CommonButton(
     modifier: Modifier = Modifier,
     buttonName: String,
     textStyle: TextStyle,
     buttonColor: ButtonColors,
+    backgroundOffset: Dp = 28.dp,
     onClick: () -> Unit
 ) {
-    Column(
+    ConstraintLayout(
         modifier = modifier
             .padding(16.dp)
-            .fillMaxSize()
     ) {
         Button(
             onClick = { onClick.invoke() },
@@ -61,7 +63,7 @@ fun CommonButtonText(
         }
         Box(
             modifier = Modifier
-                .offset(y = -(30).dp)
+                .offset(y = backgroundOffset)
                 .zIndex(-1f)
                 .shadow(
                     elevation = 4.dp,
@@ -90,7 +92,7 @@ fun CommonButtonText(
 @Preview(showBackground = true)
 @Composable
 fun CommonButtonPreview() {
-    CommonButtonText(
+    CommonButton(
         buttonName = stringResource(id = R.string.label_preview_button),
         textStyle = MaterialTheme.typography.h5.copy(
             fontSize = 14.sp,

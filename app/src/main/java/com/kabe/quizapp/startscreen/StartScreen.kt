@@ -18,7 +18,7 @@ import com.kabe.quizapp.destinations.SetUpScreenDestination
 import com.kabe.quizapp.ui.theme.Blue
 import com.kabe.quizapp.ui.theme.QuizAppTheme
 import com.kabe.quizapp.ui.theme.White
-import com.kabe.quizapp.ui.views.CommonButtonText
+import com.kabe.quizapp.ui.views.CommonButton
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -33,33 +33,37 @@ fun StartScreen(navigator: DestinationsNavigator?) {
     ) {
         val (playButton, exitButton) = createRefs()
 
-        Buttons(
-            buttonName = stringResource(id = R.string.label_play),
+        CommonButton(
             modifier = Modifier.constrainAs(playButton) {
                 centerVerticallyTo(parent)
                 centerHorizontallyTo(parent)
-            }) {
-            navigator?.navigate(SetUpScreenDestination)
-        }
-
-        Buttons(
-            buttonName = stringResource(id = R.string.label_exit),
-            modifier = Modifier.constrainAs(exitButton) {
-                top.linkTo(playButton.bottom, margin = 16.dp)
-                centerHorizontallyTo(parent)
-            }) { }
-
-        CommonButtonText(
+            },
             buttonName = stringResource(id = R.string.label_play),
             textStyle = MaterialTheme.typography.h4.copy(
                 fontSize = 14.sp,
                 color = White,
                 fontWeight = FontWeight.W600
             ),
-            buttonColor = ButtonDefaults.buttonColors(backgroundColor = Blue)
+            buttonColor = ButtonDefaults.buttonColors(backgroundColor = Blue),
+            backgroundOffset = 24.dp
         ) {
-
+            navigator?.navigate(SetUpScreenDestination)
         }
+
+        CommonButton(
+            modifier =  Modifier.constrainAs(exitButton) {
+                top.linkTo(playButton.bottom, margin = 16.dp)
+                centerHorizontallyTo(parent)
+            },
+            buttonName = stringResource(id = R.string.label_exit),
+            textStyle = MaterialTheme.typography.h4.copy(
+                fontSize = 14.sp,
+                color = White,
+                fontWeight = FontWeight.W600
+            ),
+            buttonColor = ButtonDefaults.buttonColors(backgroundColor = Blue),
+            backgroundOffset = 24.dp
+        ) { }
     }
 }
 
