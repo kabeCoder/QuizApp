@@ -5,7 +5,10 @@
     <string name="label_preview_button">Common Button</string>
     <string name="label_preview_textField_label">Common TextField Label</string>
     <string name="label_preview_textField_content">Common TextField Text</string>
-    <string name="label_preview_transparent_shadow">Transparent Shadow Text</string>
+    <string name="label_preview_category_text">Category Text</string>
+
+    // Common UI
+    <string name="label_transparent_shadow">Transparent Shadow Text</string>
 
     // Content Description
     <string name="label_icon_button_description">Icon Description</string>
@@ -13,6 +16,9 @@
     // Start Screen
     <string name="label_play">Play</string>
     <string name="label_exit">Exit</string>
+
+    // Category Screen
+
 
     // Setup Screen
     <string name="label_timer_in_seconds">Set timer</string>

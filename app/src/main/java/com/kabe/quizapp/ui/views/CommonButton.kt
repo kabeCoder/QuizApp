@@ -78,7 +78,7 @@ fun CommonButtonText(
         ) {
             Column {
                 Text(
-                    text = stringResource(id = R.string.label_preview_transparent_shadow),
+                    text = stringResource(id = R.string.label_transparent_shadow),
                     color = Color.Transparent,
                     modifier = Modifier.padding(8.dp)
                 )
