@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -36,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.kabe.quizapp.R
 import com.kabe.quizapp.ui.theme.Black
 import com.kabe.quizapp.ui.theme.Gray1
@@ -56,18 +56,28 @@ fun CommonClickableTextFieldWithLabel(
     onClick: (Boolean) -> Unit
 ) {
 
-    Column(
+    ConstraintLayout(
         modifier = modifier
-            .fillMaxSize()
-            .padding(MaterialTheme.spacing.small + MaterialTheme.spacing.extraSmall)
     ) {
 
+        val (
+            txtFieldLabel,
+            txtFieldInput,
+            dropdownTexts,
+            dropdownTextsShadow
+
+        ) = createRefs()
         val textFieldValue = remember {
             mutableStateOf(textFieldContent)
         }
 
         Text(
             text = textFieldLabel,
+            modifier = Modifier
+                .constrainAs(txtFieldLabel) {
+                    start.linkTo(parent.start)
+                    top.linkTo(parent.top)
+                },
             style = textStyle
         )
 
@@ -75,7 +85,10 @@ fun CommonClickableTextFieldWithLabel(
             value = textFieldValue.value,
             onValueChange = {},
             modifier = Modifier
-                .fillMaxWidth()
+                .constrainAs(txtFieldInput) {
+                    start.linkTo(parent.start)
+                    top.linkTo(txtFieldLabel.bottom)
+                }
                 .padding(top = MaterialTheme.spacing.small)
                 .border(
                     width = 1.dp,
@@ -89,7 +102,8 @@ fun CommonClickableTextFieldWithLabel(
                 .padding(MaterialTheme.spacing.small + MaterialTheme.spacing.extraSmall)
                 .clickable {
                     onClick.invoke(showDropdown)
-                },
+                }
+                .fillMaxWidth(),
             enabled = false,
             textStyle = MaterialTheme.typography.h5.copy(
                 fontSize = 14.sp,
@@ -117,6 +131,10 @@ fun CommonClickableTextFieldWithLabel(
         if (showDropdown) {
             Box(
                 modifier = Modifier
+                    .constrainAs(dropdownTexts) {
+                        start.linkTo(parent.start)
+                        top.linkTo(txtFieldInput.bottom)
+                    }
                     .padding(MaterialTheme.spacing.customSpacingTwo)
                     .clip(shape = RoundedCornerShape(10.dp))
                     .background(Color.White)
@@ -140,7 +158,11 @@ fun CommonClickableTextFieldWithLabel(
 
             Box(
                 modifier = Modifier
-                    .offset(y = -(170).dp)
+                    .constrainAs(dropdownTextsShadow) {
+                        start.linkTo(parent.start)
+                        top.linkTo(txtFieldInput.bottom)
+                    }
+                    .offset(y = 5.dp)
                     .zIndex(-1f)
                     .shadow(
                         elevation = 4.dp,

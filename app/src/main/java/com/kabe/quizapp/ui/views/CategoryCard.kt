@@ -96,15 +96,7 @@ fun CategoryCard(
                 )
                 .width(134.dp)
                 .height(120.dp)
-        ) {
-            Column {
-                Text(
-                    text = stringResource(id = R.string.label_transparent_shadow),
-                    color = Color.Transparent,
-                    modifier = Modifier.padding(MaterialTheme.spacing.small + MaterialTheme.spacing.extraSmall)
-                )
-            }
-        }
+        ) {}
     }
 }
 

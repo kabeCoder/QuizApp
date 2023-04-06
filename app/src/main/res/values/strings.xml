@@ -8,6 +8,7 @@
     <string name="label_preview_category_text">Category Text</string>
 
     // Common UI
+    <string name="label_transparent_text">Transparent Text</string>
     <string name="label_transparent_shadow">Transparent Shadow Text</string>
 
     // Content Description
@@ -18,7 +19,7 @@
     <string name="label_exit">Exit</string>
 
     // Category Screen
-
+    <string name="label_choose_categories">Choose Categories</string>
 
     // Setup Screen
     <string name="label_timer_in_seconds">Set timer</string>

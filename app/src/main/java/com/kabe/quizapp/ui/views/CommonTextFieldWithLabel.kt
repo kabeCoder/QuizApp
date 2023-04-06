@@ -2,7 +2,6 @@ package com.kabe.quizapp.ui.views
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -38,7 +37,6 @@ fun CommonTextFieldWithLabel(
 
     Column(
         modifier = modifier
-            .fillMaxSize()
     ) {
 
         val textFieldValue = remember {

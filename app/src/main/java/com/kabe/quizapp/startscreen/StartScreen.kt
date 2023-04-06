@@ -1,10 +1,8 @@
 package com.kabe.quizapp.startscreen
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -51,7 +49,7 @@ fun StartScreen(navigator: DestinationsNavigator?) {
         }
 
         CommonButton(
-            modifier =  Modifier.constrainAs(exitButton) {
+            modifier = Modifier.constrainAs(exitButton) {
                 top.linkTo(playButton.bottom, margin = 16.dp)
                 centerHorizontallyTo(parent)
             },
@@ -64,13 +62,6 @@ fun StartScreen(navigator: DestinationsNavigator?) {
             buttonColor = ButtonDefaults.buttonColors(backgroundColor = Blue),
             backgroundOffset = 24.dp
         ) { }
-    }
-}
-
-@Composable
-fun Buttons(buttonName: String, modifier: Modifier, onClick: () -> Unit) {
-    Button(modifier = modifier, onClick = { onClick.invoke() }) {
-        Text(text = buttonName)
     }
 }
 
