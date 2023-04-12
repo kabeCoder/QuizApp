@@ -5,15 +5,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -24,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.kabe.quizapp.R
-import com.kabe.quizapp.destinations.SetUpScreenDestination
 import com.kabe.quizapp.destinations.StartScreenDestination
 import com.kabe.quizapp.ui.theme.DarkBlue1
 import com.kabe.quizapp.ui.theme.White
@@ -39,7 +37,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Destination
 @Composable
 fun CategoryScreen(
-navigator: DestinationsNavigator?
+    navigator: DestinationsNavigator?
 ) {
     CategoryScreenView(navigator)
 }
@@ -125,7 +123,9 @@ fun CategoryScreenView(
                     .padding(16.dp)
                     .verticalScroll(scrollState),
             ) {
-                Row{
+                Row(
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
                     imageIcons.filterIndexed { index, _ -> index % 2 == 0 }.chunked(13)
                         .forEach { chunkedCategoryName ->
                             Column {
@@ -133,7 +133,6 @@ fun CategoryScreenView(
                                     CategoryCard(
                                         modifier = Modifier
                                             .padding(
-                                                start = MaterialTheme.spacing.medium,
                                                 top = MaterialTheme.spacing.medium,
                                                 bottom = MaterialTheme.spacing.medium,
                                                 end = MaterialTheme.spacing.small
@@ -160,8 +159,7 @@ fun CategoryScreenView(
                                             .padding(
                                                 start = MaterialTheme.spacing.small,
                                                 top = MaterialTheme.spacing.medium,
-                                                bottom = MaterialTheme.spacing.medium,
-                                                end = MaterialTheme.spacing.medium
+                                                bottom = MaterialTheme.spacing.medium
                                             ),
                                         painter = painterResource(id = category.image),
                                         label = context.getString(category.imageLabel),
@@ -175,8 +173,6 @@ fun CategoryScreenView(
             }
         }
     }
-
-
 }
 
 @Preview(showBackground = true)
