@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.kabe.quizapp.ui.theme.Blue
+import com.kabe.quizapp.ui.theme.Blue1
 
 @Composable
 fun CommonBoxHeader(
@@ -16,7 +16,7 @@ fun CommonBoxHeader(
 ) {
     Box(
         modifier = modifier
-            .background(Blue)
+            .background(Blue1)
             .height(200.dp)
             .fillMaxWidth()
     ) {

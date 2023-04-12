@@ -1,5 +1,6 @@
 package com.kabe.quizapp.ui.views
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -64,12 +65,11 @@ fun CategoryCard(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Icon(
+                Image(
                     painter = painter,
                     contentDescription = stringResource(id = R.string.label_icon_button_description),
-                    modifier = Modifier
-                        .size(iconSize),
-                    tint = Pink
+                modifier = Modifier
+                    .size(iconSize)
                 )
                 Text(
                     text = label,

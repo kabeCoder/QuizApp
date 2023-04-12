@@ -16,7 +16,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.kabe.quizapp.ui.theme.Blue
+import com.kabe.quizapp.ui.theme.Blue1
 import com.kabe.quizapp.ui.theme.QuizAppTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -46,7 +46,7 @@ fun SetUpScreen(
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }
-                .background(Blue)
+                .background(Blue1)
                 .height(200.dp)
                 .fillMaxWidth()
         ) {

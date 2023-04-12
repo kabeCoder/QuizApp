@@ -1,19 +1,22 @@
 package com.kabe.quizapp.categoryscreen
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,8 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.kabe.quizapp.R
-import com.kabe.quizapp.ui.theme.DarkBlue
-import com.kabe.quizapp.ui.theme.Pink
+import com.kabe.quizapp.destinations.SetUpScreenDestination
+import com.kabe.quizapp.destinations.StartScreenDestination
+import com.kabe.quizapp.ui.theme.DarkBlue1
 import com.kabe.quizapp.ui.theme.White
 import com.kabe.quizapp.ui.theme.spacing
 import com.kabe.quizapp.ui.views.CategoryCard
@@ -30,18 +34,23 @@ import com.kabe.quizapp.ui.views.CommonBoxHeader
 import com.kabe.quizapp.ui.views.CommonButtonIcon
 import com.kabe.quizapp.ui.views.CommonScreenCard
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination
 @Composable
-fun CategoryScreen() {
-    CategoryScreenView()
+fun CategoryScreen(
+navigator: DestinationsNavigator?
+) {
+    CategoryScreenView(navigator)
 }
 
 @Composable
-fun CategoryScreenView() {
+fun CategoryScreenView(
+    navigator: DestinationsNavigator?
+) {
 
     val scrollState = rememberScrollState()
-    val categories = stringArrayResource(id = R.array.category).toList()
+    val context = LocalContext.current
 
     ConstraintLayout(
         modifier = Modifier
@@ -67,8 +76,13 @@ fun CategoryScreenView() {
                     top = MaterialTheme.spacing.large
                 ),
             buttonIcon = painterResource(id = R.drawable.ic_back),
-            buttonColor = ButtonDefaults.buttonColors(backgroundColor = DarkBlue),
-            onClick = {}
+            buttonColor = ButtonDefaults.buttonColors(backgroundColor = DarkBlue1),
+            onClick = {
+                navigator?.popBackStack(
+                    route = StartScreenDestination,
+                    inclusive = false
+                )
+            }
         )
 
         Text(
@@ -109,13 +123,13 @@ fun CategoryScreenView() {
             Box(
                 modifier = Modifier
                     .padding(16.dp)
-                    .verticalScroll(scrollState)
+                    .verticalScroll(scrollState),
             ) {
-                Row {
-                    categories.filterIndexed { index, _ -> index % 2 == 0 }.chunked(13)
-                        .forEach { chunk ->
+                Row{
+                    imageIcons.filterIndexed { index, _ -> index % 2 == 0 }.chunked(13)
+                        .forEach { chunkedCategoryName ->
                             Column {
-                                chunk.forEach { category ->
+                                chunkedCategoryName.forEach { category ->
                                     CategoryCard(
                                         modifier = Modifier
                                             .padding(
@@ -124,15 +138,15 @@ fun CategoryScreenView() {
                                                 bottom = MaterialTheme.spacing.medium,
                                                 end = MaterialTheme.spacing.small
                                             ),
-                                        painter = painterResource(id = R.drawable.ic_any),
-                                        label = category,
-                                        labelColor = Pink,
+                                        painter = painterResource(id = category.image),
+                                        label = context.getString(category.imageLabel),
+                                        labelColor = category.imageLabelColor,
                                         iconSize = 75.dp
                                     ) {}
                                 }
                             }
                         }
-                    categories.filterIndexed { index, _ -> index % 2 == 1 }.chunked(12)
+                    imageIcons.filterIndexed { index, _ -> index % 2 == 1 }.chunked(12)
                         .forEach { chunk ->
                             Column(
                                 modifier = Modifier
@@ -149,9 +163,9 @@ fun CategoryScreenView() {
                                                 bottom = MaterialTheme.spacing.medium,
                                                 end = MaterialTheme.spacing.medium
                                             ),
-                                        painter = painterResource(id = R.drawable.ic_any),
-                                        label = category,
-                                        labelColor = Pink,
+                                        painter = painterResource(id = category.image),
+                                        label = context.getString(category.imageLabel),
+                                        labelColor = category.imageLabelColor,
                                         iconSize = 75.dp
                                     ) {}
                                 }
@@ -168,5 +182,5 @@ fun CategoryScreenView() {
 @Preview(showBackground = true)
 @Composable
 fun CategoryScreenPreview() {
-    CategoryScreen()
+    CategoryScreen(null)
 }

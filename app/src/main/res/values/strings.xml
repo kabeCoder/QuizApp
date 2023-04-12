@@ -10,9 +10,8 @@
     // Common UI
     <string name="label_transparent_text">Transparent Text</string>
     <string name="label_transparent_shadow">Transparent Shadow Text</string>
-
-    // Content Description
     <string name="label_icon_button_description">Icon Description</string>
+    <string name="label_continue">Continue</string>
 
     // Start Screen
     <string name="label_play">Play</string>
@@ -21,24 +20,32 @@
     // Category Screen
     <string name="label_choose_categories">Choose Categories</string>
 
-    // Setup Screen
-    <string name="label_timer_in_seconds">Set timer</string>
+    <string name="label_any_category">Any Category</string>
+    <string name="label_general_knowledge">General Knowledge</string>
+    <string name="label_entertainment_books">Entertainment: Books</string>
+    <string name="label_entertainment_film">Entertainment: Film</string>
+    <string name="label_entertainment_music">Entertainment: Music</string>
+    <string name="label_entertainment_musicals_and_theatres">Entertainment: Musicals &amp; Theatres</string>
+    <string name="label_entertainment_television">Entertainment: Television</string>
+    <string name="label_entertainment_video_games">Entertainment: Video Games</string>
+    <string name="label_entertainment_board_games">Entertainment: Board Games</string>
+    <string name="label_science_and_nature">Science &amp; Nature</string>
+    <string name="label_science_computer">Science: Computers</string>
+    <string name="label_science_mathematics">Science: Mathematics</string>
+    <string name="label_mythology">Mythology</string>
+    <string name="label_sports">Sports</string>
+    <string name="label_geography">Geography</string>
+    <string name="label_history">History</string>
+    <string name="label_politics">Politics</string>
+    <string name="label_arts">Arts</string>
+    <string name="label_celebrities">Celebrities</string>
+    <string name="label_animals">Animals</string>
+    <string name="label_vehicles">Vehicles</string>
+    <string name="label_entertainment_comics">Entertainment: Comics</string>
+    <string name="label_science_gadgets">Science: Gadgets</string>
+    <string name="label_entertainment_japanese_anime_and_manga">Entertainment: Japanese Anime &amp; Manga</string>
+    <string name="label_entertainment_cartoon_and_animation">Entertainment: Cartoon &amp; Animation</string>
 
-    // Number of Questions
-    <string-array name="number_of_questions">
-        <item>5</item>
-        <item>10</item>
-        <item>15</item>
-        <item>20</item>
-        <item>25</item>
-        <item>30</item>
-        <item>35</item>
-        <item>40</item>
-        <item>45</item>
-        <item>50</item>
-    </string-array>
-
-    // Quiz Category
     <string-array name="category">
         <item>Any Category</item>
         <item>General Knowledge</item>
@@ -65,6 +72,23 @@
         <item>Science: Gadgets</item>
         <item>Entertainment: Japanese Anime &amp; Manga</item>
         <item>Entertainment: Cartoon &amp; Animation</item>
+    </string-array>
+
+    // Setup Screen
+    <string name="label_timer_in_seconds">Set timer</string>
+
+    // Number of Questions
+    <string-array name="number_of_questions">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+        <item>35</item>
+        <item>40</item>
+        <item>45</item>
+        <item>50</item>
     </string-array>
 
     // Quiz Difficulty

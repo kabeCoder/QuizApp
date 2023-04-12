@@ -13,8 +13,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.kabe.quizapp.R
 import com.kabe.quizapp.destinations.CategoryScreenDestination
-import com.kabe.quizapp.destinations.SetUpScreenDestination
-import com.kabe.quizapp.ui.theme.Blue
+import com.kabe.quizapp.ui.theme.Blue1
 import com.kabe.quizapp.ui.theme.QuizAppTheme
 import com.kabe.quizapp.ui.theme.White
 import com.kabe.quizapp.ui.views.CommonButton
@@ -55,7 +54,7 @@ fun StartScreenView(
                 color = White,
                 fontWeight = FontWeight.W600
             ),
-            buttonColor = ButtonDefaults.buttonColors(backgroundColor = Blue),
+            buttonColor = ButtonDefaults.buttonColors(backgroundColor = Blue1),
             backgroundOffset = 24.dp
         ) {
             navigator?.navigate(CategoryScreenDestination)
@@ -72,7 +71,7 @@ fun StartScreenView(
                 color = White,
                 fontWeight = FontWeight.W600
             ),
-            buttonColor = ButtonDefaults.buttonColors(backgroundColor = Blue),
+            buttonColor = ButtonDefaults.buttonColors(backgroundColor = Blue1),
             backgroundOffset = 24.dp
         ) { }
     }

@@ -1,11 +1,0 @@
-
-_kotlin:S107m"HThis function has 16 parameters, which is greater than the 7 authorized.(¸‡ñÈ
-Okotlin:S1172"2Remove this unused function parameter "navigator".(òˆ—úÿÿÿÿ
-Mkotlin:S1481("5Remove this unused "setUpScreenState" local variable.(ÀØ¡¾
-Okotlin:S1481%"2Remove this unused "confirmButton" local variable.(Ê‰‡şÿÿÿÿ
-Fkotlin:S1481$")Remove this unused "type" local variable.(ıÏ²Öúÿÿÿÿ
-Lkotlin:S1481#"/Remove this unused "difficulty" local variable.(À¶æÿÿÿÿÿ
-Jkotlin:S1481""-Remove this unused "category" local variable.(ˆ·ÁÓüÿÿÿÿ
-Ckotlin:S1481!"+Remove this unused "amount" local variable.(˜ä¬
-Ikotlin:S1481 ",Remove this unused "btnBack" local variable.(Äş¥Ÿıÿÿÿÿ
-6kotlin:S1258"Remove this commented out code.(Ôªò²

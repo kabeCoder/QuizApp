@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.kabe.quizapp.R
-import com.kabe.quizapp.ui.theme.Blue
+import com.kabe.quizapp.ui.theme.Blue1
 import com.kabe.quizapp.ui.theme.White
 import com.kabe.quizapp.ui.theme.spacing
 
@@ -97,7 +97,7 @@ fun CommonButtonPreview() {
             color = White,
             fontWeight = FontWeight.W600
         ),
-        buttonColor = ButtonDefaults.buttonColors(backgroundColor = Blue),
+        buttonColor = ButtonDefaults.buttonColors(backgroundColor = Blue1),
         onClick = {}
     )
 }
