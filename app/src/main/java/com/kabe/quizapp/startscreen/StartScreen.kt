@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.kabe.quizapp.R
+import com.kabe.quizapp.destinations.CategoryScreenDestination
 import com.kabe.quizapp.destinations.SetUpScreenDestination
 import com.kabe.quizapp.ui.theme.Blue
 import com.kabe.quizapp.ui.theme.QuizAppTheme
@@ -24,12 +25,24 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @RootNavGraph(start = true)
 @Destination
 @Composable
-fun StartScreen(navigator: DestinationsNavigator?) {
+fun StartScreen(
+    navigator: DestinationsNavigator?
+) {
+    StartScreenView(navigator = navigator)
+}
+
+@Composable
+fun StartScreenView(
+    navigator: DestinationsNavigator?
+){
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        val (playButton, exitButton) = createRefs()
+        val (
+            playButton,
+            exitButton
+        ) = createRefs()
 
         CommonButton(
             modifier = Modifier.constrainAs(playButton) {
@@ -45,7 +58,7 @@ fun StartScreen(navigator: DestinationsNavigator?) {
             buttonColor = ButtonDefaults.buttonColors(backgroundColor = Blue),
             backgroundOffset = 24.dp
         ) {
-            navigator?.navigate(SetUpScreenDestination)
+            navigator?.navigate(CategoryScreenDestination)
         }
 
         CommonButton(

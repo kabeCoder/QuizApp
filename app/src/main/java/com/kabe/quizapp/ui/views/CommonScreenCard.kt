@@ -3,10 +3,11 @@ package com.kabe.quizapp.ui.views
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -22,36 +23,44 @@ import com.kabe.quizapp.ui.theme.spacing
 
 @Composable
 fun CommonScreenCard(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    content: @Composable (ColumnScope.() -> Unit)
 ) {
     ConstraintLayout(
         modifier = modifier
     ) {
+
         Box(
             modifier = Modifier
                 .padding(MaterialTheme.spacing.customSpacingTwo)
                 .clip(shape = RoundedCornerShape(10.dp))
                 .background(Color.White)
-                .height(600.dp)
-                .width(300.dp)
-        ) {}
+                .fillMaxSize()
+
+        ) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                content = content
+            )
+        }
 
         Box(
             modifier = Modifier
-                .offset(y = MaterialTheme.spacing.extraSmall)
+                .padding(bottom = 6.dp)
+                .offset(y = 5.dp)
                 .zIndex(-1f)
                 .shadow(
                     elevation = 4.dp,
-                    shape = RoundedCornerShape(10.dp),
-                    clip = false
+                    shape = RoundedCornerShape(15.dp),
+                    clip = false,
                 )
                 .border(
                     width = 1.dp,
                     color = Color.Transparent,
-                    shape = RoundedCornerShape(10.dp)
+                    shape = RoundedCornerShape(15.dp)
                 )
-                .height(598.dp)
-                .width(304.dp)
+                .fillMaxSize()
+
         ) {}
     }
 }
@@ -59,6 +68,6 @@ fun CommonScreenCard(
 @Preview(showBackground = true)
 @Composable
 fun CommonScreenCardPreview() {
-    CommonScreenCard()
+    CommonScreenCard {}
 }
 

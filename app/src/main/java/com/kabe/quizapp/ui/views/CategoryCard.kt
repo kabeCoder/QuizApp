@@ -3,6 +3,7 @@ package com.kabe.quizapp.ui.views
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
@@ -24,7 +25,9 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
@@ -35,44 +38,51 @@ import com.kabe.quizapp.ui.theme.spacing
 
 @Composable
 fun CategoryCard(
+    modifier: Modifier = Modifier,
     painter: Painter,
     label: String,
     labelColor: Color,
+    iconSize: Dp,
     onClick: () -> Unit
 ) {
     ConstraintLayout(
-        modifier = Modifier
-            .padding(MaterialTheme.spacing.medium)
+        modifier = modifier
     ) {
         Box(
             modifier = Modifier
-                .padding(
-                    MaterialTheme.spacing.customSpacingTwo
-                )
                 .clip(shape = RoundedCornerShape(10.dp))
                 .background(Color.White)
-                .width(130.dp)
-                .height(120.dp)
                 .clickable {
                     onClick.invoke()
-                },
+                }
+                .width(140.dp)
+                .height(130.dp),
             contentAlignment = Alignment.Center
 
         ) {
-            Column {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Icon(
                     painter = painter,
-                    contentDescription = "",
+                    contentDescription = stringResource(id = R.string.label_icon_button_description),
                     modifier = Modifier
-                        .offset(x = MaterialTheme.spacing.medium + MaterialTheme.spacing.customSpacingTwo)
-                        .size(75.dp),
+                        .size(iconSize),
                     tint = Pink
                 )
                 Text(
                     text = label,
-                    modifier = Modifier.padding(MaterialTheme.spacing.small + MaterialTheme.spacing.extraSmall),
+                    modifier = Modifier
+                        .padding(
+                            start = MaterialTheme.spacing.small,
+                            end = MaterialTheme.spacing.small
+                        ),
+                    textAlign = TextAlign.Center,
+                    softWrap = true,
+                    maxLines = 3,
                     style = MaterialTheme.typography.h5.copy(
-                        fontSize = 14.sp,
+                        fontSize = 12.sp,
                         color = labelColor,
                         fontWeight = FontWeight.W600
                     )
@@ -82,7 +92,7 @@ fun CategoryCard(
 
         Box(
             modifier = Modifier
-                .offset(y = MaterialTheme.spacing.extraSmall + MaterialTheme.spacing.customSpacingTwo)
+                .offset(y = MaterialTheme.spacing.extraSmall)
                 .zIndex(-1f)
                 .shadow(
                     elevation = 4.dp,
@@ -94,9 +104,39 @@ fun CategoryCard(
                     color = Color.Transparent,
                     shape = RoundedCornerShape(10.dp)
                 )
-                .width(134.dp)
-                .height(120.dp)
-        ) {}
+                .width(140.dp)
+                .height(130.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Icon(
+                    painter = painter,
+                    contentDescription = stringResource(id = R.string.label_icon_button_description),
+                    modifier = Modifier
+                        .size(iconSize),
+                    tint = Color.Transparent
+                )
+                Text(
+                    text = label,
+                    modifier = Modifier
+                        .padding(
+                            start = MaterialTheme.spacing.small,
+                            end = MaterialTheme.spacing.small
+                        ),
+                    textAlign = TextAlign.Center,
+                    softWrap = true,
+                    maxLines = 3,
+                    style = MaterialTheme.typography.h5.copy(
+                        fontSize = 12.sp,
+                        color = Color.Transparent,
+                        fontWeight = FontWeight.W600
+                    )
+                )
+            }
+        }
     }
 }
 
@@ -106,6 +146,7 @@ fun CategoryCardPreview() {
     CategoryCard(
         painter = painterResource(id = R.drawable.ic_any),
         label = stringResource(id = R.string.label_preview_category_text),
-        labelColor = Pink
+        labelColor = Pink,
+        iconSize = 75.dp
     ) {}
 }
