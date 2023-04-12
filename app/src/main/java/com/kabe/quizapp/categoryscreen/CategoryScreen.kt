@@ -13,6 +13,9 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -23,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.kabe.quizapp.R
+import com.kabe.quizapp.destinations.SetupScreenDestination
 import com.kabe.quizapp.destinations.StartScreenDestination
 import com.kabe.quizapp.ui.theme.DarkBlue1
 import com.kabe.quizapp.ui.theme.White
@@ -49,6 +53,7 @@ fun CategoryScreenView(
 
     val scrollState = rememberScrollState()
     val context = LocalContext.current
+    val categoryScreenState = rememberCategoryScreenState()
 
     ConstraintLayout(
         modifier = Modifier
@@ -124,6 +129,7 @@ fun CategoryScreenView(
                     .verticalScroll(scrollState),
             ) {
                 Row(
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     imageIcons.filterIndexed { index, _ -> index % 2 == 0 }.chunked(13)
@@ -141,7 +147,9 @@ fun CategoryScreenView(
                                         label = context.getString(category.imageLabel),
                                         labelColor = category.imageLabelColor,
                                         iconSize = 75.dp
-                                    ) {}
+                                    ) { selectedCategory ->
+                                        navigator?.navigate(SetupScreenDestination(selectedCategory))
+                                    }
                                 }
                             }
                         }
@@ -165,7 +173,9 @@ fun CategoryScreenView(
                                         label = context.getString(category.imageLabel),
                                         labelColor = category.imageLabelColor,
                                         iconSize = 75.dp
-                                    ) {}
+                                    ) { selectedCategory ->
+                                        navigator?.navigate(SetupScreenDestination(selectedCategory))
+                                    }
                                 }
                             }
                         }
@@ -173,6 +183,17 @@ fun CategoryScreenView(
             }
         }
     }
+}
+
+@Composable
+fun rememberCategoryScreenState(
+    categoryValue: MutableState<String> = mutableStateOf(""),
+) = remember(
+    categoryValue
+) {
+    CategoryScreenState(
+        categoryValue
+    )
 }
 
 @Preview(showBackground = true)

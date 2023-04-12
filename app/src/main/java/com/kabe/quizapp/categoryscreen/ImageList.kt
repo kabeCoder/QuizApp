@@ -35,8 +35,6 @@ data class ImageItems(
     val imageLabelColor: Color
 )
 
-
-
 val imageIcons = listOf(
     ImageItems(
         image = R.drawable.ic_any,

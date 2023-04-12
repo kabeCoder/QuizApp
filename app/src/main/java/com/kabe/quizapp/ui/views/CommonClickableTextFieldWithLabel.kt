@@ -46,14 +46,10 @@ fun CommonClickableTextFieldWithLabel(
     modifier: Modifier = Modifier,
     textFieldContent: String,
     textFieldLabel: String,
-    textStyle: TextStyle = MaterialTheme.typography.h4.copy(
-        fontSize = 16.sp,
-        color = Black,
-        fontWeight = FontWeight.W600
-    ),
     showDropdown: Boolean = false,
     dropdownList: Array<String>,
-    onClick: (Boolean) -> Unit
+    onSelectedItem: (String) -> Unit,
+    onClick: () -> Unit
 ) {
 
     ConstraintLayout(
@@ -78,12 +74,18 @@ fun CommonClickableTextFieldWithLabel(
                     start.linkTo(parent.start)
                     top.linkTo(parent.top)
                 },
-            style = textStyle
+            style =  MaterialTheme.typography.h4.copy(
+                fontSize = 16.sp,
+                color = Black,
+                fontWeight = FontWeight.W600
+            )
         )
 
         BasicTextField(
             value = textFieldValue.value,
-            onValueChange = {},
+            onValueChange = {
+                textFieldValue.value = it
+            },
             modifier = Modifier
                 .constrainAs(txtFieldInput) {
                     start.linkTo(parent.start)
@@ -101,7 +103,7 @@ fun CommonClickableTextFieldWithLabel(
                 )
                 .padding(MaterialTheme.spacing.small + MaterialTheme.spacing.extraSmall)
                 .clickable {
-                    onClick.invoke(showDropdown)
+                    onClick.invoke()
                 }
                 .fillMaxWidth(),
             enabled = false,
@@ -141,11 +143,24 @@ fun CommonClickableTextFieldWithLabel(
                     .fillMaxWidth()
 
             ) {
-                Column {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
                     dropdownList.forEach { list ->
                         Text(
                             text = list,
-                            modifier = Modifier.padding(MaterialTheme.spacing.small + MaterialTheme.spacing.extraSmall),
+                            modifier = Modifier
+                                .padding(
+                                    MaterialTheme.spacing.small
+                                            + MaterialTheme.spacing.extraSmall
+                                )
+                                .clickable {
+                                    textFieldValue.value = list
+                                    onClick.invoke()
+                                    onSelectedItem.invoke(textFieldValue.value)
+                                }
+                                .fillMaxWidth(),
                             style = MaterialTheme.typography.h5.copy(
                                 fontSize = 14.sp,
                                 color = Black.copy(0.5f),
@@ -166,13 +181,13 @@ fun CommonClickableTextFieldWithLabel(
                     .zIndex(-1f)
                     .shadow(
                         elevation = 4.dp,
-                        shape = RoundedCornerShape(15.dp),
+                        shape = RoundedCornerShape(10.dp),
                         clip = false,
                     )
                     .border(
                         width = 1.dp,
                         color = Color.Transparent,
-                        shape = RoundedCornerShape(15.dp)
+                        shape = RoundedCornerShape(10.dp)
                     )
                     .fillMaxWidth()
 
@@ -181,8 +196,12 @@ fun CommonClickableTextFieldWithLabel(
                     dropdownList.forEach { list ->
                         Text(
                             text = list,
-                            color = Color.Transparent,
-                            modifier = Modifier.padding(MaterialTheme.spacing.small + MaterialTheme.spacing.extraSmall)
+                            modifier = Modifier.padding(MaterialTheme.spacing.small + MaterialTheme.spacing.extraSmall),
+                            style = MaterialTheme.typography.h5.copy(
+                                fontSize = 14.sp,
+                                color = Color.Transparent,
+                                fontWeight = FontWeight.W600
+                            )
                         )
                     }
                 }
@@ -198,6 +217,7 @@ fun CommonClickableTextFieldWithLabelPreview() {
         textFieldContent = stringResource(id = R.string.label_preview_textField_content),
         textFieldLabel = stringResource(id = R.string.label_preview_textField_label),
         dropdownList = stringArrayResource(id = R.array.difficulty),
-        showDropdown = true
+        showDropdown = true,
+        onSelectedItem = {}
     ) {}
 }

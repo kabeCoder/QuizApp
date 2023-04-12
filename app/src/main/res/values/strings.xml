@@ -19,7 +19,6 @@
 
     // Category Screen
     <string name="label_choose_categories">Choose Categories</string>
-
     <string name="label_any_category">Any Category</string>
     <string name="label_general_knowledge">General Knowledge</string>
     <string name="label_entertainment_books">Entertainment: Books</string>
@@ -75,6 +74,13 @@
     </string-array>
 
     // Setup Screen
+    <string name="label_setup_quiz">Setup Quiz</string>
+    <string name="label_quiz_category">Quiz Category</string>
+    <string name="label_quiz_category_name">Quiz Category Name</string>
+    <string name="label_question_type">Question Type</string>
+    <string name="label_pick_question_type">Pick Question Type</string>
+    <string name="label_difficulty">Question Type</string>
+    <string name="label_pick_difficulty">Pick Difficulty</string>
     <string name="label_timer_in_seconds">Set timer</string>
 
     // Number of Questions

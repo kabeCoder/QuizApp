@@ -44,7 +44,7 @@ fun CategoryCard(
     label: String,
     labelColor: Color,
     iconSize: Dp,
-    onClick: () -> Unit
+    onClick: (String) -> Unit
 ) {
     ConstraintLayout(
         modifier = modifier
@@ -54,7 +54,7 @@ fun CategoryCard(
                 .clip(shape = RoundedCornerShape(10.dp))
                 .background(Color.White)
                 .clickable {
-                    onClick.invoke()
+                    onClick.invoke(label)
                 }
                 .width(140.dp)
                 .height(130.dp),
@@ -148,5 +148,7 @@ fun CategoryCardPreview() {
         label = stringResource(id = R.string.label_preview_category_text),
         labelColor = Pink,
         iconSize = 75.dp
-    ) {}
+    ) {
+
+    }
 }
