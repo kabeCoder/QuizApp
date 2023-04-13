@@ -79,11 +79,26 @@
     <string name="label_quiz_category_name">Quiz Category Name</string>
     <string name="label_question_type">Question Type</string>
     <string name="label_pick_question_type">Pick Question Type</string>
-    <string name="label_difficulty">Question Type</string>
+    <string name="label_difficulty">Difficulty</string>
     <string name="label_pick_difficulty">Pick Difficulty</string>
-    <string name="label_timer_in_seconds">Set timer</string>
+    <string name="label_number_of_questions">Number of Questions</string>
+    <string name="label_pick_number_of_questions">Pick Question Length</string>
+    <string name="label_quiz_duration">Quiz Duration</string>
+    <string name="label_pick_quiz_duration">Set Quiz Time</string>
 
-    // Number of Questions
+    <string-array name="type">
+        <item>Any Type</item>
+        <item>Multiple Choice</item>
+        <item>True / False</item>
+    </string-array>
+
+    <string-array name="difficulty">
+        <item>Any Difficulty</item>
+        <item>Easy</item>
+        <item>Medium</item>
+        <item>Hard</item>
+    </string-array>
+
     <string-array name="number_of_questions">
         <item>5</item>
         <item>10</item>
@@ -97,18 +112,17 @@
         <item>50</item>
     </string-array>
 
-    // Quiz Difficulty
-    <string-array name="difficulty">
-        <item>Any Difficulty</item>
-        <item>Easy</item>
-        <item>Medium</item>
-        <item>Hard</item>
+    <string-array name="timer_duration">
+        <item>2 minutes</item>
+        <item>4 minutes</item>
+        <item>6 minutes</item>
+        <item>8 minutes</item>
+        <item>10 minutes</item>
+        <item>12 minutes</item>
+        <item>14 minutes</item>
+        <item>16 minutes</item>
+        <item>18 minutes</item>
+        <item>20 minutes</item>
     </string-array>
 
-    // Quiz Type
-    <string-array name="type">
-        <item>Any Type</item>
-        <item>Multiple Choice</item>
-        <item>True / False</item>
-    </string-array>
 </resources>

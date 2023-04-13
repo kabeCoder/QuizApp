@@ -16,6 +16,7 @@ import com.kabe.quizapp.destinations.CategoryScreenDestination
 import com.kabe.quizapp.ui.theme.Blue1
 import com.kabe.quizapp.ui.theme.QuizAppTheme
 import com.kabe.quizapp.ui.theme.White
+import com.kabe.quizapp.ui.theme.spacing
 import com.kabe.quizapp.ui.views.CommonButton
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
@@ -55,7 +56,7 @@ fun StartScreenView(
                 fontWeight = FontWeight.W600
             ),
             buttonColor = ButtonDefaults.buttonColors(backgroundColor = Blue1),
-            backgroundOffset = 24.dp
+            backgroundOffset = MaterialTheme.spacing.extraSmall
         ) {
             navigator?.navigate(CategoryScreenDestination)
         }
@@ -72,7 +73,7 @@ fun StartScreenView(
                 fontWeight = FontWeight.W600
             ),
             buttonColor = ButtonDefaults.buttonColors(backgroundColor = Blue1),
-            backgroundOffset = 24.dp
+            backgroundOffset = MaterialTheme.spacing.extraSmall
         ) { }
     }
 }

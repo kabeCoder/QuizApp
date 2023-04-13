@@ -4,6 +4,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -36,7 +37,7 @@ fun CommonButton(
     buttonName: String,
     textStyle: TextStyle,
     buttonColor: ButtonColors,
-    backgroundOffset: Dp = MaterialTheme.spacing.large - MaterialTheme.spacing.extraSmall,
+    backgroundOffset: Dp = MaterialTheme.spacing.small,
     onClick: () -> Unit
 ) {
     ConstraintLayout(
@@ -49,13 +50,14 @@ fun CommonButton(
                     start = 3.dp,
                     end = 3.dp
                 )
+                .height(48.dp)
                 .fillMaxWidth(),
             shape = RoundedCornerShape(15.dp),
             colors = buttonColor
         ) {
             Text(
                 text = buttonName,
-                modifier = Modifier.padding(12.dp),
+                modifier = Modifier.padding(4.dp),
                 style = textStyle
             )
         }
@@ -73,6 +75,7 @@ fun CommonButton(
                     color = Color.Transparent,
                     shape = RoundedCornerShape(25.dp)
                 )
+                .height(48.dp)
                 .fillMaxWidth()
 
         ) {
@@ -80,7 +83,7 @@ fun CommonButton(
                 Text(
                     text = stringResource(id = R.string.label_transparent_shadow),
                     color = Color.Transparent,
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier.padding(4.dp)
                 )
             }
         }

@@ -13,9 +13,6 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -51,9 +48,8 @@ fun CategoryScreenView(
     navigator: DestinationsNavigator?
 ) {
 
-    val scrollState = rememberScrollState()
+    val categoryScreenScrollState = rememberScrollState()
     val context = LocalContext.current
-    val categoryScreenState = rememberCategoryScreenState()
 
     ConstraintLayout(
         modifier = Modifier
@@ -126,7 +122,7 @@ fun CategoryScreenView(
             Box(
                 modifier = Modifier
                     .padding(16.dp)
-                    .verticalScroll(scrollState),
+                    .verticalScroll(categoryScreenScrollState),
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -183,17 +179,6 @@ fun CategoryScreenView(
             }
         }
     }
-}
-
-@Composable
-fun rememberCategoryScreenState(
-    categoryValue: MutableState<String> = mutableStateOf(""),
-) = remember(
-    categoryValue
-) {
-    CategoryScreenState(
-        categoryValue
-    )
 }
 
 @Preview(showBackground = true)
