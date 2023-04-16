@@ -84,7 +84,7 @@
     <string name="label_number_of_questions">Number of Questions</string>
     <string name="label_pick_number_of_questions">Pick Question Length</string>
     <string name="label_quiz_duration">Quiz Duration</string>
-    <string name="label_pick_quiz_duration">Set Quiz Time</string>
+    <string name="label_set_quiz_item">Set Quiz Item</string>
 
     <string-array name="type">
         <item>Any Type</item>

@@ -1,14 +1,10 @@
 package com.kabe.quizapp.playscreen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -17,7 +13,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
@@ -71,8 +66,10 @@ fun SetupScreenView(
 
         val setupScreenDropdownState = rememberSetupScreenDropdownState()
         val setupScreenValueState = rememberSetupScreenValueState()
-        val modifiedCategoryName = categoryName.substringAfter(AppConstants.CATEGORY_NAME_DELIMITER)
         val setupScreenScrollState = rememberScrollState()
+        val modifiedCategoryName = categoryName.substringAfter(AppConstants.CATEGORY_NAME_DELIMITER)
+        val questionNumberOfItems = stringArrayResource(id = R.array.number_of_questions)
+        val timePerQuestionItems = stringArrayResource(id = R.array.timer_duration)
 
         CommonBoxHeader()
 
@@ -137,7 +134,7 @@ fun SetupScreenView(
                     .padding(16.dp)
                     .verticalScroll(setupScreenScrollState),
             ) {
-                ConstraintLayout{
+                ConstraintLayout {
                     val (
                         quizCategory,
                         quizQuestionType,
@@ -233,6 +230,21 @@ fun SetupScreenView(
                         onSelectedItem = { questionItems ->
                             setupScreenValueState.numberOfQuestionsSelectedValue.value =
                                 questionItems
+
+                            setupScreenValueState.timeDurationSelectedValue.value =
+                                when (questionItems) {
+                                    questionNumberOfItems[0] -> timePerQuestionItems[0]
+                                    questionNumberOfItems[1] -> timePerQuestionItems[1]
+                                    questionNumberOfItems[2] -> timePerQuestionItems[2]
+                                    questionNumberOfItems[3] -> timePerQuestionItems[3]
+                                    questionNumberOfItems[4] -> timePerQuestionItems[4]
+                                    questionNumberOfItems[5] -> timePerQuestionItems[5]
+                                    questionNumberOfItems[6] -> timePerQuestionItems[6]
+                                    questionNumberOfItems[7] -> timePerQuestionItems[7]
+                                    questionNumberOfItems[8] -> timePerQuestionItems[8]
+                                    questionNumberOfItems[9] -> timePerQuestionItems[9]
+                                    else -> null.toString()
+                                }
                         }
                     ) {
                         setupScreenDropdownState.numberOfQuestionsIsExpandedValue.value =
@@ -252,7 +264,10 @@ fun SetupScreenView(
                                         + MaterialTheme.spacing.small,
                                 end = MaterialTheme.spacing.medium
                             ),
-                        textFieldContent = modifiedCategoryName,
+                        textFieldContent = setupScreenValueState.timeDurationSelectedValue.value.ifEmpty {
+                            stringResource(
+                                id = R.string.label_set_quiz_item)
+                        },
                         textFieldLabel = stringResource(id = R.string.label_quiz_duration)
                     )
 
@@ -284,45 +299,6 @@ fun SetupScreenView(
                 }
             }
         }
-//        DropDownMenu(
-//            "Category",
-//            stringArrayResource(id = R.array.category),
-//            modifier = Modifier.constrainAs(category) {
-//                top.linkTo(amount.bottom, margin = 16.dp)
-//            },
-//            isExpanded = setUpScreenState.categoryIsExpandedValue,
-//            initialSelected = setUpScreenState.categoryInitialSelectedValue,
-//            textFieldSize = setUpScreenState.categoryTextFieldSizeValue
-//        ) {
-//            setUpScreenState.categoryOfQuestions.value = when (it) {
-//                "Any Category" -> ""
-//                "General Knowledge" -> "9"
-//                "Entertainment: Books" -> "10"
-//                "Entertainment: Film" -> "11"
-//                "Entertainment: Music" -> "12"
-//                "Entertainment: Musicals & Theatres" -> "13"
-//                "Entertainment: Television" -> "14"
-//                "Entertainment: Video Games" -> "15"
-//                "Entertainment: Board Games" -> "16"
-//                "Science & Nature" -> "17"
-//                "Science: Computers" -> "18"
-//                "Science: Mathematics" -> "19"
-//                "Mythology" -> "20"
-//                "Sports" -> "21"
-//                "Geography" -> "22"
-//                "History" -> "23"
-//                "Politics" -> "24"
-//                "Art" -> "25"
-//                "Celebrities" -> "26"
-//                "Animals" -> "27"
-//                "Vehicles" -> "28"
-//                "Entertainment: Comics" -> "29"
-//                "Science: Gadgets" -> "30"
-//                "Entertainment: Japanese Anime & Manga" -> "31"
-//                "Entertainment: Cartoon & Animation" -> "32"
-//                else -> null.toString()
-//            }
-//        }
     }
 }
 

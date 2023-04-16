@@ -82,9 +82,7 @@ fun CommonClickableTextFieldWithLabel(
 
         BasicTextField(
             value = textFieldValue.value,
-            onValueChange = {
-                textFieldValue.value = it
-            },
+            onValueChange = {},
             modifier = Modifier
                 .constrainAs(txtFieldInput) {
                     start.linkTo(parent.start)

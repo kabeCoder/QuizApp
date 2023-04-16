@@ -1,5 +1,6 @@
 package com.kabe.quizapp.ui.views
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -13,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.sp
 import com.kabe.quizapp.R
 import com.kabe.quizapp.ui.theme.Black
 import com.kabe.quizapp.ui.theme.Gray1
-import com.kabe.quizapp.ui.theme.White
 import com.kabe.quizapp.ui.theme.spacing
 
 @Composable
@@ -55,8 +54,10 @@ fun CommonTextFieldWithLabel(
         )
 
         BasicTextField(
-            value = textFieldValue.value,
-            onValueChange = {},
+            value = textFieldContent,
+            onValueChange = {
+                            textFieldValue.value = it
+            },
             modifier = Modifier
                 .background(
                     color = Gray1.copy(alpha = 0.2f),
