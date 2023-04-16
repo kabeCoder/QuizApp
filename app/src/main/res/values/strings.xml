@@ -57,6 +57,9 @@
     <string name="label_pick_number_of_questions">Pick Question Length</string>
     <string name="label_quiz_duration">Quiz Duration</string>
     <string name="label_set_quiz_item">Set Quiz Item </string>
+    <string name="label_any"></string>
+    <string name="label_multiple">multiple</string>
+    <string name="label_true_or_false">boolean</string>
 
     <string-array name="category">
         <item>Any Category</item>
@@ -87,7 +90,6 @@
     </string-array>
 
     <string-array name="category_api_value">
-        <item></item>
         <item>9</item>
         <item>10</item>
         <item>11</item>
@@ -114,18 +116,30 @@
         <item>32</item>
     </string-array>
 
-    <string-array name="type">
+    <string-array name="question_type">
         <item>Any Type</item>
         <item>Multiple Choice</item>
         <item>True / False</item>
     </string-array>
 
-    <string-array name="difficulty">
+    <string-array name="converted_question_type">
+        <item>multiple</item>
+        <item>boolean</item>
+    </string-array>
+
+    <string-array name="question_difficulty">
         <item>Any Difficulty</item>
         <item>Easy</item>
         <item>Medium</item>
         <item>Hard</item>
     </string-array>
+
+    <string-array name="converted_question_difficulty">
+        <item>easy</item>
+        <item>medium</item>
+        <item>hard</item>
+    </string-array>
+
 
     <string-array name="number_of_questions">
         <item>5</item>

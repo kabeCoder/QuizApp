@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.kabe.quizapp.constant.AppConstants
 import com.kabe.quizapp.destinations.ResultScreenDestination
 import com.kabe.quizapp.quizscreen.views.CountdownTimer
 import com.kabe.quizapp.ui.theme.QuizAppTheme
@@ -34,10 +35,12 @@ fun QuizScreen(
     category: Int,
     difficulty: String,
     type: String,
-    timer: Int,
+    timer: String,
     navigator: DestinationsNavigator?,
     viewModel: QuizScreenViewModel = hiltViewModel()
 ) {
+
+    val modifiedTimer = timer.removeSuffix(AppConstants.TIMER_SUFFIX).toIntOrNull() ?: 0
 
     val triviaList by viewModel.trivia.collectAsState(initial = emptyList())
 
@@ -64,7 +67,7 @@ fun QuizScreen(
                 val choices = incorrectAnswer.plus(correctAnswer)
                 Text(text = "Question: ")
                 Text(text = "Score: ${currentScore.value}")
-                CountdownTimer(timeInSeconds = timer) {
+                CountdownTimer(timeInSeconds = modifiedTimer * 60) {
                     //navigator?.navigate(ResultScreenDestination)
                 }
 
@@ -125,6 +128,6 @@ fun QuizScreen(
 @Composable
 fun PreviewQuizScreen() {
     QuizAppTheme {
-        QuizScreen(0, 0, "", "", 0, null)
+        QuizScreen(0, 0, "", "", "", null)
     }
 }

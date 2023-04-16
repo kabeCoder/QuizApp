@@ -213,7 +213,7 @@ fun CommonClickableTextFieldWithLabelPreview() {
     CommonClickableTextFieldWithLabel(
         textFieldContent = stringResource(id = R.string.label_preview_textField_content),
         textFieldLabel = stringResource(id = R.string.label_preview_textField_label),
-        dropdownList = stringArrayResource(id = R.array.difficulty),
+        dropdownList = stringArrayResource(id = R.array.question_difficulty),
         showDropdown = true,
         onSelectedItem = {}
     ) {}

@@ -1,6 +1,5 @@
 package com.kabe.quizapp.playscreen
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -15,6 +14,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
@@ -26,6 +26,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.kabe.quizapp.R
 import com.kabe.quizapp.constant.AppConstants
 import com.kabe.quizapp.destinations.CategoryScreenDestination
+import com.kabe.quizapp.destinations.QuizScreenDestination
 import com.kabe.quizapp.ui.theme.Blue1
 import com.kabe.quizapp.ui.theme.DarkBlue1
 import com.kabe.quizapp.ui.theme.QuizAppTheme
@@ -66,12 +67,18 @@ fun SetupScreenView(
             setupQuizCard
         ) = createRefs()
 
+        val context = LocalContext.current
         val setupScreenDropdownState = rememberSetupScreenDropdownState()
         val setupScreenValueState = rememberSetupScreenValueState()
         val setupScreenScrollState = rememberScrollState()
         val modifiedCategoryName = categoryName.substringAfter(AppConstants.CATEGORY_NAME_DELIMITER)
         val categoryItems = stringArrayResource(id = R.array.category)
         val categoryApiValueItems = stringArrayResource(id = R.array.category_api_value)
+        val questionTypeItems = stringArrayResource(id = R.array.question_type)
+        val convertedQuestionTypeItems = stringArrayResource(id = R.array.converted_question_type)
+        val questionDifficultyItems = stringArrayResource(id = R.array.question_difficulty)
+        val convertedQuestionDifficultyItems =
+            stringArrayResource(id = R.array.converted_question_difficulty)
         val questionNumberOfItems = stringArrayResource(id = R.array.number_of_questions)
         val timePerQuestionItems = stringArrayResource(id = R.array.timer_duration)
 
@@ -152,16 +159,16 @@ fun SetupScreenView(
                     LaunchedEffect(categoryName) {
                         setupScreenValueState.categorySelectedValue.value =
                             when (categoryName) {
-                                categoryItems[0] -> categoryApiValueItems[0]
-                                categoryItems[1] -> categoryApiValueItems[1]
-                                categoryItems[2] -> categoryApiValueItems[2]
-                                categoryItems[3] -> categoryApiValueItems[3]
-                                categoryItems[4] -> categoryApiValueItems[4]
-                                categoryItems[5] -> categoryApiValueItems[5]
-                                categoryItems[6] -> categoryApiValueItems[6]
-                                categoryItems[7] -> categoryApiValueItems[7]
-                                categoryItems[8] -> categoryApiValueItems[8]
-                                categoryItems[9] -> categoryApiValueItems[9]
+                                categoryItems[0] -> context.getString(R.string.label_any)
+                                categoryItems[1] -> categoryApiValueItems[0]
+                                categoryItems[2] -> categoryApiValueItems[1]
+                                categoryItems[3] -> categoryApiValueItems[2]
+                                categoryItems[4] -> categoryApiValueItems[3]
+                                categoryItems[5] -> categoryApiValueItems[4]
+                                categoryItems[6] -> categoryApiValueItems[5]
+                                categoryItems[7] -> categoryApiValueItems[6]
+                                categoryItems[8] -> categoryApiValueItems[7]
+                                categoryItems[9] -> categoryApiValueItems[8]
                                 else -> null.toString()
                             }
                     }
@@ -197,10 +204,16 @@ fun SetupScreenView(
                             ),
                         textFieldContent = stringResource(id = R.string.label_pick_question_type),
                         textFieldLabel = stringResource(id = R.string.label_question_type),
-                        dropdownList = stringArrayResource(id = R.array.type),
+                        dropdownList = stringArrayResource(id = R.array.question_type),
                         showDropdown = setupScreenDropdownState.questionsTypeIsExpandedValue.value,
                         onSelectedItem = { questionType ->
-                            setupScreenValueState.questionsTypeSelectedValue.value = questionType
+                            setupScreenValueState.questionsTypeSelectedValue.value =
+                                when (questionType) {
+                                    questionTypeItems[0] -> context.getString(R.string.label_any)
+                                    questionTypeItems[1] -> convertedQuestionTypeItems[0]
+                                    questionTypeItems[2] -> convertedQuestionTypeItems[1]
+                                    else -> null.toString()
+                                }
                         }
                     ) {
                         setupScreenDropdownState.questionsTypeIsExpandedValue.value =
@@ -222,10 +235,17 @@ fun SetupScreenView(
                             ),
                         textFieldContent = stringResource(id = R.string.label_pick_difficulty),
                         textFieldLabel = stringResource(id = R.string.label_difficulty),
-                        dropdownList = stringArrayResource(id = R.array.difficulty),
+                        dropdownList = stringArrayResource(id = R.array.question_difficulty),
                         showDropdown = setupScreenDropdownState.difficultyIsExpandedValue.value,
                         onSelectedItem = { difficultyType ->
-                            setupScreenValueState.difficultySelectedValue.value = difficultyType
+                            setupScreenValueState.difficultySelectedValue.value =
+                                when (difficultyType) {
+                                    questionDifficultyItems[0] -> context.getString(R.string.label_any)
+                                    questionDifficultyItems[1] -> convertedQuestionDifficultyItems[0]
+                                    questionDifficultyItems[2] -> convertedQuestionDifficultyItems[1]
+                                    questionDifficultyItems[3] -> convertedQuestionDifficultyItems[2]
+                                    else -> null.toString()
+                                }
                         }
                     ) {
                         setupScreenDropdownState.difficultyIsExpandedValue.value =
@@ -288,7 +308,8 @@ fun SetupScreenView(
                             ),
                         textFieldContent = setupScreenValueState.timeDurationSelectedValue.value.ifEmpty {
                             stringResource(
-                                id = R.string.label_set_quiz_item)
+                                id = R.string.label_set_quiz_item
+                            )
                         },
                         textFieldLabel = stringResource(id = R.string.label_quiz_duration)
                     )
@@ -316,14 +337,16 @@ fun SetupScreenView(
                         buttonColor = ButtonDefaults.buttonColors(backgroundColor = Blue1),
                         backgroundOffset = 2.dp
                     ) {
-                        Log.d("SetupScreen",
-                            setupScreenValueState.categorySelectedValue.value + "\n" +
-                                    setupScreenValueState.questionsTypeSelectedValue.value + "\n" +
-                                    setupScreenValueState.difficultySelectedValue.value + "\n" +
-                                    setupScreenValueState.numberOfQuestionsSelectedValue.value + "\n" +
-                                    setupScreenValueState.timeDurationSelectedValue.value
-                        )
 
+                        navigator?.navigate(
+                            QuizScreenDestination(
+                                amount = setupScreenValueState.numberOfQuestionsSelectedValue.value.toInt(),
+                                category = setupScreenValueState.categorySelectedValue.value.toInt(),
+                                difficulty = setupScreenValueState.difficultySelectedValue.value,
+                                type = setupScreenValueState.questionsTypeSelectedValue.value,
+                                timer = setupScreenValueState.timeDurationSelectedValue.value
+                            )
+                        )
 
                     }
                 }
