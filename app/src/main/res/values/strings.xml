@@ -45,6 +45,19 @@
     <string name="label_entertainment_japanese_anime_and_manga">Entertainment: Japanese Anime &amp; Manga</string>
     <string name="label_entertainment_cartoon_and_animation">Entertainment: Cartoon &amp; Animation</string>
 
+    // Setup Screen
+    <string name="label_setup_quiz">Setup Quiz</string>
+    <string name="label_quiz_category">Quiz Category</string>
+    <string name="label_quiz_category_name">Quiz Category Name</string>
+    <string name="label_question_type">Question Type</string>
+    <string name="label_pick_question_type">Pick Question Type</string>
+    <string name="label_difficulty">Difficulty</string>
+    <string name="label_pick_difficulty">Pick Difficulty</string>
+    <string name="label_number_of_questions">Number of Questions</string>
+    <string name="label_pick_number_of_questions">Pick Question Length</string>
+    <string name="label_quiz_duration">Quiz Duration</string>
+    <string name="label_set_quiz_item">Set Quiz Item </string>
+
     <string-array name="category">
         <item>Any Category</item>
         <item>General Knowledge</item>
@@ -73,18 +86,33 @@
         <item>Entertainment: Cartoon &amp; Animation</item>
     </string-array>
 
-    // Setup Screen
-    <string name="label_setup_quiz">Setup Quiz</string>
-    <string name="label_quiz_category">Quiz Category</string>
-    <string name="label_quiz_category_name">Quiz Category Name</string>
-    <string name="label_question_type">Question Type</string>
-    <string name="label_pick_question_type">Pick Question Type</string>
-    <string name="label_difficulty">Difficulty</string>
-    <string name="label_pick_difficulty">Pick Difficulty</string>
-    <string name="label_number_of_questions">Number of Questions</string>
-    <string name="label_pick_number_of_questions">Pick Question Length</string>
-    <string name="label_quiz_duration">Quiz Duration</string>
-    <string name="label_set_quiz_item">Set Quiz Item</string>
+    <string-array name="category_api_value">
+        <item></item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+    </string-array>
 
     <string-array name="type">
         <item>Any Type</item>

@@ -1,5 +1,6 @@
 package com.kabe.quizapp.playscreen
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -9,6 +10,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -68,6 +70,8 @@ fun SetupScreenView(
         val setupScreenValueState = rememberSetupScreenValueState()
         val setupScreenScrollState = rememberScrollState()
         val modifiedCategoryName = categoryName.substringAfter(AppConstants.CATEGORY_NAME_DELIMITER)
+        val categoryItems = stringArrayResource(id = R.array.category)
+        val categoryApiValueItems = stringArrayResource(id = R.array.category_api_value)
         val questionNumberOfItems = stringArrayResource(id = R.array.number_of_questions)
         val timePerQuestionItems = stringArrayResource(id = R.array.timer_duration)
 
@@ -144,6 +148,24 @@ fun SetupScreenView(
                         btnContinue
 
                     ) = createRefs()
+
+                    LaunchedEffect(categoryName) {
+                        setupScreenValueState.categorySelectedValue.value =
+                            when (categoryName) {
+                                categoryItems[0] -> categoryApiValueItems[0]
+                                categoryItems[1] -> categoryApiValueItems[1]
+                                categoryItems[2] -> categoryApiValueItems[2]
+                                categoryItems[3] -> categoryApiValueItems[3]
+                                categoryItems[4] -> categoryApiValueItems[4]
+                                categoryItems[5] -> categoryApiValueItems[5]
+                                categoryItems[6] -> categoryApiValueItems[6]
+                                categoryItems[7] -> categoryApiValueItems[7]
+                                categoryItems[8] -> categoryApiValueItems[8]
+                                categoryItems[9] -> categoryApiValueItems[9]
+                                else -> null.toString()
+                            }
+                    }
+
                     CommonTextFieldWithLabel(
                         modifier = Modifier
                             .constrainAs(quizCategory) {
@@ -294,6 +316,14 @@ fun SetupScreenView(
                         buttonColor = ButtonDefaults.buttonColors(backgroundColor = Blue1),
                         backgroundOffset = 2.dp
                     ) {
+                        Log.d("SetupScreen",
+                            setupScreenValueState.categorySelectedValue.value + "\n" +
+                                    setupScreenValueState.questionsTypeSelectedValue.value + "\n" +
+                                    setupScreenValueState.difficultySelectedValue.value + "\n" +
+                                    setupScreenValueState.numberOfQuestionsSelectedValue.value + "\n" +
+                                    setupScreenValueState.timeDurationSelectedValue.value
+                        )
+
 
                     }
                 }
@@ -306,30 +336,29 @@ fun SetupScreenView(
 fun rememberSetupScreenDropdownState(
     questionsTypeIsExpandedValue: MutableState<Boolean> = mutableStateOf(false),
     difficultyIsExpandedValue: MutableState<Boolean> = mutableStateOf(false),
-    numberOfQuestionsIsExpandedValue: MutableState<Boolean> = mutableStateOf(false),
-    timeDurationIsExpandedValue: MutableState<Boolean> = mutableStateOf(false)
+    numberOfQuestionsIsExpandedValue: MutableState<Boolean> = mutableStateOf(false)
 ) = remember(
     questionsTypeIsExpandedValue,
     difficultyIsExpandedValue,
-    numberOfQuestionsIsExpandedValue,
-    timeDurationIsExpandedValue
+    numberOfQuestionsIsExpandedValue
 
 ) {
     SetupScreenDropdownState(
         questionsTypeIsExpandedValue,
         difficultyIsExpandedValue,
-        numberOfQuestionsIsExpandedValue,
-        timeDurationIsExpandedValue
+        numberOfQuestionsIsExpandedValue
     )
 }
 
 @Composable
 fun rememberSetupScreenValueState(
+    categorySelectedValue: MutableState<String> = mutableStateOf(""),
     questionsTypeSelectedValue: MutableState<String> = mutableStateOf(""),
     difficultySelectedValue: MutableState<String> = mutableStateOf(""),
     numberOfQuestionsSelectedValue: MutableState<String> = mutableStateOf(""),
     timeDurationSelectedValue: MutableState<String> = mutableStateOf(""),
 ) = remember(
+    categorySelectedValue,
     questionsTypeSelectedValue,
     difficultySelectedValue,
     numberOfQuestionsSelectedValue,
@@ -337,6 +366,7 @@ fun rememberSetupScreenValueState(
 
 ) {
     SetupScreenValueState(
+        categorySelectedValue,
         questionsTypeSelectedValue,
         difficultySelectedValue,
         numberOfQuestionsSelectedValue,

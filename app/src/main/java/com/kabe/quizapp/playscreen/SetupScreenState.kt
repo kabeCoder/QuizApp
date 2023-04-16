@@ -7,10 +7,10 @@ class SetupScreenDropdownState(
     val questionsTypeIsExpandedValue: MutableState<Boolean>,
     val difficultyIsExpandedValue: MutableState<Boolean>,
     val numberOfQuestionsIsExpandedValue: MutableState<Boolean>,
-    val timeDurationIsExpandedValue: MutableState<Boolean>,
 )
 
 class SetupScreenValueState(
+    val categorySelectedValue: MutableState<String>,
     val questionsTypeSelectedValue: MutableState<String>,
     val difficultySelectedValue: MutableState<String>,
     val numberOfQuestionsSelectedValue: MutableState<String>,
