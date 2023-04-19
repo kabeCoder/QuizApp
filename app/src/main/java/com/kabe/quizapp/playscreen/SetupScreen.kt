@@ -59,7 +59,10 @@ fun SetupScreenView(
     categoryName: String
 ) {
 
-    ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+    ConstraintLayout(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
 
         val (
             btnBack,

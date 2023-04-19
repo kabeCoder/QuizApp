@@ -21,7 +21,3 @@ o
 ?app/src/main/java/com/kabe/quizapp/ui/views/CommonScreenCard.kt,7/b/7bdb41087c7392b2bccb14095a0a4686edf3f7bd
 k
 ;app/src/main/java/com/kabe/quizapp/ui/views/CategoryCard.kt,5/6/56373c2d5a4464545b2030152638cc2b1ce32d18
-m
-=app/src/main/java/com/kabe/quizapp/startscreen/StartScreen.kt,e/2/e216537047a518693f3421c86d9899fbced28dc3
-u
-Eapp/src/main/java/com/kabe/quizapp/playscreen/SetUpScreenViewModel.kt,9/b/9b6f75f23484aa34de4ea16ccd74561ca3964bd7
