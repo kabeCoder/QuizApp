@@ -167,4 +167,7 @@
         <item>20 minutes</item>
     </string-array>
 
+    // Quiz Screen
+    <string name="label_question_number">Question %1$s,</string>
+
 </resources>

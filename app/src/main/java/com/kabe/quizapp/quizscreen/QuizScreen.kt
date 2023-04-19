@@ -1,46 +1,29 @@
 package com.kabe.quizapp.quizscreen
 
-import android.text.Html
-import android.util.Log
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.kabe.quizapp.R
 import com.kabe.quizapp.constant.AppConstants
-import com.kabe.quizapp.destinations.CategoryScreenDestination
-import com.kabe.quizapp.destinations.ResultScreenDestination
 import com.kabe.quizapp.quizscreen.views.CountdownTimer
-import com.kabe.quizapp.ui.theme.DarkBlue1
 import com.kabe.quizapp.ui.theme.QuizAppTheme
 import com.kabe.quizapp.ui.theme.White
 import com.kabe.quizapp.ui.theme.spacing
 import com.kabe.quizapp.ui.views.CommonBoxHeader
-import com.kabe.quizapp.ui.views.CommonButtonIcon
 import com.kabe.quizapp.ui.views.CommonScreenCard
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import kotlin.math.min
 
 @Destination
 @Composable
@@ -98,21 +81,36 @@ fun QuizScreenView(
     ) {
 
         val (
-            textHeader,
             questionsItem,
             quizTimer,
-            setupQuizCard
+            quizCard
         ) = createRefs()
 
         CommonBoxHeader()
 
-        Text(
-            text = stringResource(id = R.string.label_setup_quiz),
+        CountdownTimer(
             modifier = Modifier
-                .constrainAs(textHeader) {
+                .constrainAs(quizTimer) {
+                    top.linkTo(parent.top)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(quizCard.top)
+                }
+                .padding(
+                    top = MaterialTheme.spacing.large - MaterialTheme.spacing.small,
+                    end = MaterialTheme.spacing.medium
+                ),
+            timeInSeconds = modifiedTimer * 60
+        ) {
+
+        }
+
+        Text(
+            text = stringResource(id = R.string.label_question_number, "5"),
+            modifier = Modifier
+                .constrainAs(questionsItem) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
-                    bottom.linkTo(setupQuizCard.top)
+                    bottom.linkTo(quizCard.top)
                 }
                 .padding(
                     start = MaterialTheme.spacing.medium,
@@ -129,9 +127,9 @@ fun QuizScreenView(
 
         CommonScreenCard(
             modifier = Modifier
-                .constrainAs(setupQuizCard) {
+                .constrainAs(quizCard) {
                     start.linkTo(parent.start)
-                    top.linkTo(textHeader.bottom)
+                    top.linkTo(questionsItem.bottom)
                     end.linkTo(parent.end)
                 }
                 .padding(
