@@ -24,13 +24,40 @@ class QuizScreenViewModel @Inject constructor(
     private val _trivia = MutableSharedFlow<MutableList<Trivia>>()
     val trivia: SharedFlow<List<Trivia>> = _trivia.asSharedFlow()
 
+    private val _responseCode = MutableSharedFlow<Int>()
+    val responseCode: SharedFlow<Int> = _responseCode.asSharedFlow()
 
-    fun getTrivia(amount: Int, category: Int, difficulty: String, type: String) {
+
+    fun getTrivia(
+        amount: Int,
+        category: Int,
+        difficulty: String,
+        type: String
+    ) {
         viewModelScope.launch {
             val triviaResult = triviaRepository.getTrivia(amount, category, difficulty, type)
             when (triviaResult.status) {
                 Status.SUCCESS -> triviaResult.data?.let { trivia ->
                     _trivia.emit(trivia.toMutableList())
+                }
+                Status.ERROR -> {
+                    triviaResult.message?.let { _errorMessage.emit(it) }
+                }
+            }
+        }
+    }
+
+    fun getResponseCode(
+        amount: Int,
+        category: Int,
+        difficulty: String,
+        type: String
+    ) {
+        viewModelScope.launch {
+            val triviaResult = triviaRepository.getResponseCode(amount, category, difficulty, type)
+            when (triviaResult.status) {
+                Status.SUCCESS -> triviaResult.data?.let { trivia ->
+                    _responseCode.emit(trivia)
                 }
                 Status.ERROR -> {
                     triviaResult.message?.let { _errorMessage.emit(it) }

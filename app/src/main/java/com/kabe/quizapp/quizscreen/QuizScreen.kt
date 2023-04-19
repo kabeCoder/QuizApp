@@ -43,8 +43,12 @@ fun QuizScreen(
     val modifiedTimer = timer.removeSuffix(AppConstants.TIMER_SUFFIX).toIntOrNull() ?: 0
 
     val triviaList by viewModel.trivia.collectAsState(initial = emptyList())
+    
+    val responseCode by viewModel.responseCode.collectAsState(initial = "")
 
     viewModel.getTrivia(amount, category, difficulty, type)
+    
+    viewModel.getResponseCode(amount, category, difficulty, type)
 
     val currentTriviaIndex = remember {
         mutableStateOf(0)
@@ -55,7 +59,7 @@ fun QuizScreen(
     }
 
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
-
+        Text(text = responseCode.toString())
         if (triviaList.isNotEmpty())
             Column {
                 val questions =
