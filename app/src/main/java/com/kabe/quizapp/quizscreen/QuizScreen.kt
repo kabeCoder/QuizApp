@@ -1,8 +1,6 @@
 package com.kabe.quizapp.quizscreen
 
 import android.text.Html
-import android.util.Log
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -14,8 +12,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,11 +22,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kabe.quizapp.R
 import com.kabe.quizapp.constant.AppConstants
+import com.kabe.quizapp.destinations.ResultScreenDestination
 import com.kabe.quizapp.quizscreen.views.CountdownTimer
-import com.kabe.quizapp.ui.theme.Gray1
-import com.kabe.quizapp.ui.theme.Green7
 import com.kabe.quizapp.ui.theme.QuizAppTheme
-import com.kabe.quizapp.ui.theme.Red1
 import com.kabe.quizapp.ui.theme.White
 import com.kabe.quizapp.ui.theme.spacing
 import com.kabe.quizapp.ui.views.CommonBoxHeader
@@ -37,6 +33,8 @@ import com.kabe.quizapp.ui.views.CommonTextCard
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlin.math.min
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Destination
 @Composable
@@ -85,15 +83,7 @@ fun QuizScreenView(
         viewModel.getTrivia(amount, category, difficulty, type)
     }
 
-    //viewModel.getResponseCode(amount, category, difficulty, type)
-
-    val currentTriviaIndex = remember {
-        mutableStateOf(0)
-    }
-
-    val currentScore = remember {
-        mutableStateOf(0)
-    }
+    val scope = rememberCoroutineScope()
 
     ConstraintLayout(
         modifier = Modifier
@@ -119,13 +109,14 @@ fun QuizScreenView(
                     top = MaterialTheme.spacing.large - MaterialTheme.spacing.small,
                     end = MaterialTheme.spacing.medium
                 ),
-            timeInSeconds = modifiedTimer * 60
+            timeInSeconds = modifiedTimer * 60,
+            isQuestionsLoaded = triviaList.isNotEmpty()
         ) {
 
         }
 
         Text(
-            text = stringResource(id = R.string.label_question_number, "5"),
+            text = stringResource(id = R.string.label_question_number, quizScreenState.currentTriviaIndex.value + 1),
             modifier = Modifier
                 .constrainAs(questionsItem) {
                     top.linkTo(parent.top)
@@ -167,17 +158,23 @@ fun QuizScreenView(
                     val (txtQuestion, txtChoices) = createRefs()
 
                     val questions =
-                        triviaList[min(currentTriviaIndex.value, triviaList.size - 1)].question
+                        triviaList[min(
+                            quizScreenState.currentTriviaIndex.value,
+                            triviaList.size - 1
+                        )].question
                     val correctAnswer =
-                        triviaList[min(currentTriviaIndex.value, triviaList.size - 1)].correctAnswer
+                        triviaList[min(
+                            quizScreenState.currentTriviaIndex.value,
+                            triviaList.size - 1
+                        )].correctAnswer
                     val incorrectAnswer =
                         triviaList[min(
-                            currentTriviaIndex.value,
+                            quizScreenState.currentTriviaIndex.value,
                             triviaList.size - 1
                         )].incorrectAnswers
                     val choices = incorrectAnswer.plus(correctAnswer)
 
-                    Text(text = "Correct Answer: ${correctAnswer.toString()}")
+                    //Text(text = "Correct Answer: ${correctAnswer.toString()} \n Current Score: ${currentScore.value} \n Size: ${triviaList.size}")
                     Text(
                         text = Html.fromHtml(questions, Html.FROM_HTML_MODE_LEGACY).toString(),
                         modifier = Modifier
@@ -200,7 +197,7 @@ fun QuizScreenView(
                             }
                             .padding(top = MaterialTheme.spacing.extraLarge)
                     ) {
-                        choices.forEach {
+                        choices.forEach { choice ->
 
                             CommonTextCard(
                                 modifier = Modifier
@@ -209,74 +206,54 @@ fun QuizScreenView(
                                         end = MaterialTheme.spacing.large,
                                         bottom = MaterialTheme.spacing.medium + MaterialTheme.spacing.small
                                     ),
-                                textFieldContent = it ?: "",
+                                textFieldContent = choice ?: "",
                                 isIconVisible = false,
                                 selectedAnswer = quizScreenState.currentSelectedAnswer.value,
                                 correctAnswer = quizScreenState.currentCorrectAnswer.value
                             ) {
-                                quizScreenState.currentSelectedAnswer.value = it.toString()
-                                quizScreenState.currentCorrectAnswer.value = correctAnswer.toString()
+                                when (choice.toString()) {
+                                    correctAnswer -> {
+                                        quizScreenState.currentScore.value++
+                                    }
+                                }
+
+                                quizScreenState.currentSelectedAnswer.value = choice.toString()
+                                quizScreenState.currentCorrectAnswer.value =
+                                    correctAnswer.toString()
+
+                                scope.launch {
+                                    delay(500L)
+                                    quizScreenState.currentTriviaIndex.value++
+                                    if (quizScreenState.currentTriviaIndex.value >= triviaList.size) {
+                                        navigator?.navigate(ResultScreenDestination)
+                                    }
+                                }
                             }
                         }
                     }
-
-
-//                    Text(text = "Correct Answer: ")
-//                    Text(text = correctAnswer.toString())
-//                    Text(text = "Wrong Answer: ")
-//                    Text(
-//                        text = Html.fromHtml(incorrectAnswer.toString(), Html.FROM_HTML_MODE_LEGACY)
-//                            .toString()
-//                    )
-//                    Text(text = "Choices: ")
-//                    Text(
-//                        text = Html.fromHtml(choices.toString(), Html.FROM_HTML_MODE_LEGACY)
-//                            .toString()
-//                    )
-
-//                    choices.shuffled().chunked(2).forEach { chunk ->
-//                        Row(modifier = Modifier.fillMaxWidth()) {
-//                            chunk.forEach { choice ->
-//                                Card(modifier = Modifier
-//                                    .padding(16.dp)
-//                                    .weight(1f)
-//                                    .clickable {
-//                                        if (choice.toString() == correctAnswer)
-//                                            currentScore.value++
-//                                        else
-//                                            Log.d("QuizScreen", "Mali")
-//
-//                                        currentTriviaIndex.value++
-//                                        if (currentTriviaIndex.value == triviaList.size)
-//                                            navigator?.navigate(ResultScreenDestination)
-//                                    }) {
-//                                    Text(
-//                                        text = choice.toString(), modifier = Modifier
-//                                            .padding(16.dp)
-//                                    )
-//                                }
-//                            }
-//                        }
-//                    }
                 }
         }
-
     }
-
 }
 
 @Composable
 fun rememberQuizScreenState(
+    currentTriviaIndex: MutableState<Int> = mutableStateOf(0),
+    currentScore: MutableState<Int> = mutableStateOf(0),
     currentAnswerSelected: MutableState<String> = mutableStateOf(""),
     currentCorrectAnswer: MutableState<String> = mutableStateOf(""),
     showCorrectAndIncorrectAnswerIcon: MutableState<Boolean> = mutableStateOf(false),
 ) = remember(
+    currentTriviaIndex,
+    currentScore,
     currentAnswerSelected,
     currentCorrectAnswer,
     showCorrectAndIncorrectAnswerIcon
 
 ) {
     QuizScreenState(
+        currentTriviaIndex,
+        currentScore,
         currentAnswerSelected,
         currentCorrectAnswer,
         showCorrectAndIncorrectAnswerIcon

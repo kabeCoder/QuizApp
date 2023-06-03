@@ -28,7 +28,7 @@ class QuizScreenViewModel @Inject constructor(
     val responseCode: SharedFlow<Int> = _responseCode.asSharedFlow()
 
 
-    fun getTrivia(
+    suspend fun getTrivia(
         amount: Int,
         category: Int,
         difficulty: String,

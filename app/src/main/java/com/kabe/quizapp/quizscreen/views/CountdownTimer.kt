@@ -1,7 +1,6 @@
 package com.kabe.quizapp.quizscreen.views
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,17 +16,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.ConstraintLayout
 import com.kabe.quizapp.R
-import com.kabe.quizapp.ui.theme.Black
-import com.kabe.quizapp.ui.theme.Blue1
 import com.kabe.quizapp.ui.theme.White
 import com.kabe.quizapp.ui.theme.spacing
 import kotlinx.coroutines.delay
@@ -36,16 +31,19 @@ import kotlinx.coroutines.delay
 fun CountdownTimer(
     modifier: Modifier = Modifier,
     timeInSeconds: Int,
+    isQuestionsLoaded: Boolean,
     onFinish: () -> Unit
 ) {
     val timeLeft = remember { mutableStateOf(timeInSeconds * 1000L) }
 
-    LaunchedEffect(timeLeft) {
-        while (timeLeft.value > 0) {
-            delay(1000)
-            timeLeft.value -= 1000
+    if (isQuestionsLoaded) {
+        LaunchedEffect(timeLeft) {
+            while (timeLeft.value > 0) {
+                delay(1000)
+                timeLeft.value -= 1000
+            }
+            onFinish()
         }
-        onFinish()
     }
 
     val timeInMinutes = (timeLeft.value / 1000 / 60).toString().padStart(2, '0')
@@ -90,7 +88,10 @@ fun CountdownTimer(
 @Preview(showBackground = true)
 @Composable
 fun CountdownTimerPreview() {
-    CountdownTimer(timeInSeconds = 120) {
+    CountdownTimer(
+        timeInSeconds = 120,
+        isQuestionsLoaded = false
+    ) {
 
     }
 }
