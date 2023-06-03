@@ -11,6 +11,7 @@ val Cyan = Color(0xFF1AF1FF)
 val DarkBlue1 = Color(0xFF0D52BA)
 val Black = Color(0xFF000000)
 val Gray1 = Color(0xFFC8BFBF)
+val Green6 = Color(0xFF33FF00)
 
 val Pink = Color(0xFFEB3380)
 val Blue1 = Color(0xFF0C6CFC)
@@ -37,6 +38,8 @@ val RedOrange4 = Color(0xFFD35400)
 val Blue4 = Color(0xFF2980B9)
 val Purple3 = Color(0xFF6C3483)
 val YellowOrange5 = Color(0xFFF9BF3B)
+val Green7 = Color(0xFF5EE53C)
+val Red1 = Color (0xFFFD4C4C)
 
 
 

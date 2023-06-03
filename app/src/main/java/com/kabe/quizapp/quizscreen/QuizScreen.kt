@@ -1,29 +1,42 @@
 package com.kabe.quizapp.quizscreen
 
+import android.text.Html
+import android.util.Log
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.kabe.quizapp.R
 import com.kabe.quizapp.constant.AppConstants
 import com.kabe.quizapp.quizscreen.views.CountdownTimer
+import com.kabe.quizapp.ui.theme.Gray1
+import com.kabe.quizapp.ui.theme.Green7
 import com.kabe.quizapp.ui.theme.QuizAppTheme
+import com.kabe.quizapp.ui.theme.Red1
 import com.kabe.quizapp.ui.theme.White
 import com.kabe.quizapp.ui.theme.spacing
 import com.kabe.quizapp.ui.views.CommonBoxHeader
 import com.kabe.quizapp.ui.views.CommonScreenCard
+import com.kabe.quizapp.ui.views.CommonTextCard
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import kotlin.math.min
 
 @Destination
 @Composable
@@ -36,13 +49,16 @@ fun QuizScreen(
     navigator: DestinationsNavigator?
 ) {
 
+    val quizScreenState = rememberQuizScreenState()
+
     QuizScreenView(
         amount = amount,
         category = category,
         difficulty = difficulty,
         type = type,
         timer = timer,
-        navigator = navigator
+        navigator = navigator,
+        quizScreenState = quizScreenState
     )
 }
 
@@ -54,16 +70,20 @@ fun QuizScreenView(
     type: String,
     timer: String,
     navigator: DestinationsNavigator?,
-    //viewModel: QuizScreenViewModel = hiltViewModel()
+    quizScreenState: QuizScreenState,
+    viewModel: QuizScreenViewModel = hiltViewModel()
 ) {
 
     val modifiedTimer = timer.removeSuffix(AppConstants.TIMER_SUFFIX).toIntOrNull() ?: 0
 
-    //val triviaList by viewModel.trivia.collectAsState(initial = emptyList())
+    val triviaList = viewModel.trivia.collectAsState(initial = emptyList()).value
 
-    //val responseCode by viewModel.responseCode.collectAsState(initial = "")
+    val responseCode = viewModel.responseCode.collectAsState(initial = "").value
 
-    //viewModel.getTrivia(amount, category, difficulty, type)
+
+    LaunchedEffect(Unit) {
+        viewModel.getTrivia(amount, category, difficulty, type)
+    }
 
     //viewModel.getResponseCode(amount, category, difficulty, type)
 
@@ -141,74 +161,126 @@ fun QuizScreenView(
                 )
         ) {
 
-        }
-//        Text(text = responseCode.toString())
-//        if (triviaList.isNotEmpty())
-//            Column {
-//                val questions =
-//                    triviaList[min(currentTriviaIndex.value, triviaList.size - 1)].question
-//                val correctAnswer =
-//                    triviaList[min(currentTriviaIndex.value, triviaList.size - 1)].correctAnswer
-//                val incorrectAnswer =
-//                    triviaList[min(currentTriviaIndex.value, triviaList.size - 1)].incorrectAnswers
-//                val choices = incorrectAnswer.plus(correctAnswer)
-//                Text(text = "Question: ")
-//                Text(text = "Score: ${currentScore.value}")
-//                CountdownTimer(timeInSeconds = modifiedTimer * 60) {
-//                    //navigator?.navigate(ResultScreenDestination)
-//                }
-//
-//
-//                Card(
-//                    modifier = Modifier
-//                        .padding(16.dp)
-//                        .fillMaxWidth()
-//                ) {
+            if (triviaList.isNotEmpty())
+                ConstraintLayout {
+
+                    val (txtQuestion, txtChoices) = createRefs()
+
+                    val questions =
+                        triviaList[min(currentTriviaIndex.value, triviaList.size - 1)].question
+                    val correctAnswer =
+                        triviaList[min(currentTriviaIndex.value, triviaList.size - 1)].correctAnswer
+                    val incorrectAnswer =
+                        triviaList[min(
+                            currentTriviaIndex.value,
+                            triviaList.size - 1
+                        )].incorrectAnswers
+                    val choices = incorrectAnswer.plus(correctAnswer)
+
+                    Text(text = "Correct Answer: ${correctAnswer.toString()}")
+                    Text(
+                        text = Html.fromHtml(questions, Html.FROM_HTML_MODE_LEGACY).toString(),
+                        modifier = Modifier
+                            .constrainAs(txtQuestion) {
+                                top.linkTo(parent.top)
+                                centerHorizontallyTo(parent)
+                            }
+                            .padding(
+                                start = MaterialTheme.spacing.large,
+                                top = MaterialTheme.spacing.large,
+                                end = MaterialTheme.spacing.large
+                            )
+                    )
+
+                    Column(
+                        modifier = Modifier
+                            .constrainAs(txtChoices) {
+                                top.linkTo(txtQuestion.bottom)
+                                centerHorizontallyTo(parent)
+                            }
+                            .padding(top = MaterialTheme.spacing.extraLarge)
+                    ) {
+                        choices.forEach {
+
+                            CommonTextCard(
+                                modifier = Modifier
+                                    .padding(
+                                        start = MaterialTheme.spacing.large,
+                                        end = MaterialTheme.spacing.large,
+                                        bottom = MaterialTheme.spacing.medium + MaterialTheme.spacing.small
+                                    ),
+                                textFieldContent = it ?: "",
+                                isIconVisible = false,
+                                selectedAnswer = quizScreenState.currentSelectedAnswer.value,
+                                correctAnswer = quizScreenState.currentCorrectAnswer.value
+                            ) {
+                                quizScreenState.currentSelectedAnswer.value = it.toString()
+                                quizScreenState.currentCorrectAnswer.value = correctAnswer.toString()
+                            }
+                        }
+                    }
+
+
+//                    Text(text = "Correct Answer: ")
+//                    Text(text = correctAnswer.toString())
+//                    Text(text = "Wrong Answer: ")
 //                    Text(
-//                        text = Html.fromHtml(questions, Html.FROM_HTML_MODE_LEGACY).toString(),
-//                        modifier = Modifier
-//                            .padding(16.dp)
+//                        text = Html.fromHtml(incorrectAnswer.toString(), Html.FROM_HTML_MODE_LEGACY)
+//                            .toString()
 //                    )
-//                }
-//                Text(text = "Correct Answer: ")
-//                Text(text = correctAnswer.toString())
-//                Text(text = "Wrong Answer: ")
-//                Text(
-//                    text = Html.fromHtml(incorrectAnswer.toString(), Html.FROM_HTML_MODE_LEGACY)
-//                        .toString()
-//                )
-//                Text(text = "Choices: ")
-//                Text(
-//                    text = Html.fromHtml(choices.toString(), Html.FROM_HTML_MODE_LEGACY).toString()
-//                )
+//                    Text(text = "Choices: ")
+//                    Text(
+//                        text = Html.fromHtml(choices.toString(), Html.FROM_HTML_MODE_LEGACY)
+//                            .toString()
+//                    )
+
+//                    choices.shuffled().chunked(2).forEach { chunk ->
+//                        Row(modifier = Modifier.fillMaxWidth()) {
+//                            chunk.forEach { choice ->
+//                                Card(modifier = Modifier
+//                                    .padding(16.dp)
+//                                    .weight(1f)
+//                                    .clickable {
+//                                        if (choice.toString() == correctAnswer)
+//                                            currentScore.value++
+//                                        else
+//                                            Log.d("QuizScreen", "Mali")
 //
-//                choices.shuffled().chunked(2).forEach { chunk ->
-//                    Row(modifier = Modifier.fillMaxWidth()) {
-//                        chunk.forEach { choice ->
-//                            Card(modifier = Modifier
-//                                .padding(16.dp)
-//                                .weight(1f)
-//                                .clickable {
-//                                    if (choice.toString() == correctAnswer)
-//                                        currentScore.value++
-//                                    else
-//                                        Log.d("QuizScreen", "Mali")
-//
-//                                    currentTriviaIndex.value++
-//                                    if (currentTriviaIndex.value == triviaList.size)
-//                                        navigator?.navigate(ResultScreenDestination)
-//                                }) {
-//                                Text(
-//                                    text = choice.toString(), modifier = Modifier
-//                                        .padding(16.dp)
-//                                )
+//                                        currentTriviaIndex.value++
+//                                        if (currentTriviaIndex.value == triviaList.size)
+//                                            navigator?.navigate(ResultScreenDestination)
+//                                    }) {
+//                                    Text(
+//                                        text = choice.toString(), modifier = Modifier
+//                                            .padding(16.dp)
+//                                    )
+//                                }
 //                            }
 //                        }
 //                    }
-//                }
-//            }
+                }
+        }
+
     }
 
+}
+
+@Composable
+fun rememberQuizScreenState(
+    currentAnswerSelected: MutableState<String> = mutableStateOf(""),
+    currentCorrectAnswer: MutableState<String> = mutableStateOf(""),
+    showCorrectAndIncorrectAnswerIcon: MutableState<Boolean> = mutableStateOf(false),
+) = remember(
+    currentAnswerSelected,
+    currentCorrectAnswer,
+    showCorrectAndIncorrectAnswerIcon
+
+) {
+    QuizScreenState(
+        currentAnswerSelected,
+        currentCorrectAnswer,
+        showCorrectAndIncorrectAnswerIcon
+    )
 }
 
 @Preview(showBackground = true)
