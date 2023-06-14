@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -24,6 +25,7 @@ import com.kabe.quizapp.R
 import com.kabe.quizapp.constant.AppConstants
 import com.kabe.quizapp.destinations.ResultScreenDestination
 import com.kabe.quizapp.quizscreen.views.CountdownTimer
+import com.kabe.quizapp.quizscreen.views.QuestionItemBoxCount
 import com.kabe.quizapp.ui.theme.QuizAppTheme
 import com.kabe.quizapp.ui.theme.White
 import com.kabe.quizapp.ui.theme.spacing
@@ -78,9 +80,9 @@ fun QuizScreenView(
 
     val responseCode = viewModel.responseCode.collectAsState(initial = "").value
 
-
     LaunchedEffect(Unit) {
         viewModel.getTrivia(amount, category, difficulty, type)
+        viewModel.getResponseCode(amount, category, difficulty, type)
     }
 
     val scope = rememberCoroutineScope()
@@ -93,6 +95,7 @@ fun QuizScreenView(
         val (
             questionsItem,
             quizTimer,
+            questionBoxCount,
             quizCard
         ) = createRefs()
 
@@ -116,12 +119,14 @@ fun QuizScreenView(
         }
 
         Text(
-            text = stringResource(id = R.string.label_question_number, quizScreenState.currentTriviaIndex.value + 1),
+            text = stringResource(
+                id = R.string.label_question_number,
+                quizScreenState.currentTriviaIndex.value + 1
+            ),
             modifier = Modifier
                 .constrainAs(questionsItem) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
-                    bottom.linkTo(quizCard.top)
                 }
                 .padding(
                     start = MaterialTheme.spacing.medium,
@@ -136,11 +141,27 @@ fun QuizScreenView(
             )
         )
 
+        QuestionItemBoxCount(
+            modifier = Modifier
+                .constrainAs(questionBoxCount) {
+                    start.linkTo(parent.start)
+                    top.linkTo(questionsItem.bottom)
+                    end.linkTo(parent.end)
+                }
+                .padding(
+                    start = MaterialTheme.spacing.small,
+                    top = MaterialTheme.spacing.small
+                ),
+            numberOfItems = triviaList.size,
+            currentQuestionIndex = quizScreenState.currentTriviaIndex.value,
+            answeredQuestions = quizScreenState.answeredQuestions
+        )
+
         CommonScreenCard(
             modifier = Modifier
                 .constrainAs(quizCard) {
                     start.linkTo(parent.start)
-                    top.linkTo(questionsItem.bottom)
+                    top.linkTo(questionBoxCount.bottom)
                     end.linkTo(parent.end)
                 }
                 .padding(
@@ -152,7 +173,7 @@ fun QuizScreenView(
                 )
         ) {
 
-            if (triviaList.isNotEmpty())
+            if (responseCode.toString() == AppConstants.RESPONSE_CODE) {
                 ConstraintLayout {
 
                     val (txtQuestion, txtChoices) = createRefs()
@@ -174,7 +195,6 @@ fun QuizScreenView(
                         )].incorrectAnswers
                     val choices = incorrectAnswer.plus(correctAnswer)
 
-                    //Text(text = "Correct Answer: ${correctAnswer.toString()} \n Current Score: ${currentScore.value} \n Size: ${triviaList.size}")
                     Text(
                         text = Html.fromHtml(questions, Html.FROM_HTML_MODE_LEGACY).toString(),
                         modifier = Modifier
@@ -197,8 +217,19 @@ fun QuizScreenView(
                             }
                             .padding(top = MaterialTheme.spacing.extraLarge)
                     ) {
-                        choices.forEach { choice ->
 
+                        val shouldShuffle =
+                            quizScreenState.currentTriviaIndex.value < triviaList.size - 1
+
+                        LaunchedEffect(quizScreenState.currentTriviaIndex.value) {
+                            quizScreenState.shuffledChoices.clear()
+                            quizScreenState.shuffledChoices.addAll(choices.filterNotNull())
+                            if (shouldShuffle) {
+                                quizScreenState.shuffledChoices.shuffle()
+                            }
+                        }
+
+                        quizScreenState.shuffledChoices.forEach { choice ->
                             CommonTextCard(
                                 modifier = Modifier
                                     .padding(
@@ -206,20 +237,17 @@ fun QuizScreenView(
                                         end = MaterialTheme.spacing.large,
                                         bottom = MaterialTheme.spacing.medium + MaterialTheme.spacing.small
                                     ),
-                                textFieldContent = choice ?: "",
-                                isIconVisible = false,
+                                textFieldContent = choice,
+                                isIconVisible = quizScreenState.showCorrectAndIncorrectAnswerIcon.value,
                                 selectedAnswer = quizScreenState.currentSelectedAnswer.value,
                                 correctAnswer = quizScreenState.currentCorrectAnswer.value
                             ) {
-                                when (choice.toString()) {
-                                    correctAnswer -> {
-                                        quizScreenState.currentScore.value++
-                                    }
-                                }
-
-                                quizScreenState.currentSelectedAnswer.value = choice.toString()
+                                quizScreenState.currentSelectedAnswer.value = choice
                                 quizScreenState.currentCorrectAnswer.value =
                                     correctAnswer.toString()
+                                quizScreenState.showCorrectAndIncorrectAnswerIcon.value = true
+
+                                quizScreenState.answeredQuestions.add(quizScreenState.currentSelectedAnswer.value == quizScreenState.currentCorrectAnswer.value)
 
                                 scope.launch {
                                     delay(500L)
@@ -232,6 +260,7 @@ fun QuizScreenView(
                         }
                     }
                 }
+            }
         }
     }
 }
@@ -243,12 +272,17 @@ fun rememberQuizScreenState(
     currentAnswerSelected: MutableState<String> = mutableStateOf(""),
     currentCorrectAnswer: MutableState<String> = mutableStateOf(""),
     showCorrectAndIncorrectAnswerIcon: MutableState<Boolean> = mutableStateOf(false),
+    shuffledChoices: MutableList<String> = mutableStateListOf(),
+    answeredQuestions: MutableList<Boolean> = mutableStateListOf()
+
 ) = remember(
     currentTriviaIndex,
     currentScore,
     currentAnswerSelected,
     currentCorrectAnswer,
-    showCorrectAndIncorrectAnswerIcon
+    showCorrectAndIncorrectAnswerIcon,
+    shuffledChoices,
+    answeredQuestions
 
 ) {
     QuizScreenState(
@@ -256,7 +290,9 @@ fun rememberQuizScreenState(
         currentScore,
         currentAnswerSelected,
         currentCorrectAnswer,
-        showCorrectAndIncorrectAnswerIcon
+        showCorrectAndIncorrectAnswerIcon,
+        shuffledChoices,
+        answeredQuestions
     )
 }
 

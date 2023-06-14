@@ -40,6 +40,7 @@ val Purple3 = Color(0xFF6C3483)
 val YellowOrange5 = Color(0xFFF9BF3B)
 val Green7 = Color(0xFF5EE53C)
 val Red1 = Color (0xFFFD4C4C)
+val Gray4 = Color (0xFFD9DEED)
 
 
 
