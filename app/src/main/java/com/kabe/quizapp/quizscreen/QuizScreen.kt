@@ -173,7 +173,7 @@ fun QuizScreenView(
                 )
         ) {
 
-            if (responseCode.toString() == AppConstants.RESPONSE_CODE) {
+            if (triviaList.isNotEmpty()) {
                 ConstraintLayout {
 
                     val (txtQuestion, txtChoices) = createRefs()

@@ -14,5 +14,5 @@ class SetupScreenValueState(
     val questionsTypeSelectedValue: MutableState<String>,
     val difficultySelectedValue: MutableState<String>,
     val numberOfQuestionsSelectedValue: MutableState<String>,
-    val timeDurationSelectedValue: MutableState<String>,
+    val timeDurationSelectedValue: MutableState<String>
 )

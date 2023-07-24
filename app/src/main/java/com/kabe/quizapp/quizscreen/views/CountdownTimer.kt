@@ -59,7 +59,7 @@ fun CountdownTimer(
     ) {
         Row(
             modifier = Modifier
-                .padding(MaterialTheme.spacing.small),
+                .padding(horizontal = MaterialTheme.spacing.small),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -67,14 +67,15 @@ fun CountdownTimer(
                 painter = painterResource(id = R.drawable.ic_timer),
                 contentDescription = stringResource(id = R.string.label_icon_button_description),
                 modifier = Modifier
-                    .size(15.dp)
+                    .size(16.dp)
                     .padding(
                         end = MaterialTheme.spacing.extraSmall
                     )
             )
             Text(
                 text = "$timeInMinutes:$timeInSeconds",
-
+                modifier = Modifier
+                    .padding(top = MaterialTheme.spacing.extraSmall),
                 style = MaterialTheme.typography.h6.copy(
                     fontSize = 12.sp,
                     color = White,

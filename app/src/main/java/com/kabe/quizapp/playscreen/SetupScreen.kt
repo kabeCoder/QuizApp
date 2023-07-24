@@ -75,8 +75,7 @@ fun SetupScreenView(
         val setupScreenValueState = rememberSetupScreenValueState()
         val setupScreenScrollState = rememberScrollState()
         val modifiedCategoryName = categoryName.substringAfter(AppConstants.CATEGORY_NAME_DELIMITER)
-        val categoryItems = stringArrayResource(id = R.array.category)
-        val categoryApiValueItems = stringArrayResource(id = R.array.category_api_value)
+        val categorySelectedValue = getCategorySelectedValue(categoryName)
         val questionTypeItems = stringArrayResource(id = R.array.question_type)
         val convertedQuestionTypeItems = stringArrayResource(id = R.array.converted_question_type)
         val questionDifficultyItems = stringArrayResource(id = R.array.question_difficulty)
@@ -159,21 +158,8 @@ fun SetupScreenView(
 
                     ) = createRefs()
 
-                    LaunchedEffect(categoryName) {
-                        setupScreenValueState.categorySelectedValue.value =
-                            when (categoryName) {
-                                categoryItems[0] -> context.getString(R.string.label_any)
-                                categoryItems[1] -> categoryApiValueItems[0]
-                                categoryItems[2] -> categoryApiValueItems[1]
-                                categoryItems[3] -> categoryApiValueItems[2]
-                                categoryItems[4] -> categoryApiValueItems[3]
-                                categoryItems[5] -> categoryApiValueItems[4]
-                                categoryItems[6] -> categoryApiValueItems[5]
-                                categoryItems[7] -> categoryApiValueItems[6]
-                                categoryItems[8] -> categoryApiValueItems[7]
-                                categoryItems[9] -> categoryApiValueItems[8]
-                                else -> null.toString()
-                            }
+                    LaunchedEffect(categorySelectedValue) {
+                        setupScreenValueState.categorySelectedValue.value = categorySelectedValue
                     }
 
                     CommonTextFieldWithLabel(
