@@ -11,5 +11,7 @@ class QuizScreenState(
     val currentCorrectAnswer: MutableState<String>,
     val showCorrectAndIncorrectAnswerIcon: MutableState<Boolean>,
     val shuffledChoices: MutableList<String>,
-    val answeredQuestions: MutableList<Boolean>
+    val answeredQuestions: MutableList<Boolean>,
+    val correctAnswers: MutableState<Int>,
+    val incorrectAnswers: MutableState<Int>
 )

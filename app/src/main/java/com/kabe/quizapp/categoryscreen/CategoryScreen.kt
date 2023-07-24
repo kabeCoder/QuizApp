@@ -28,7 +28,7 @@ import com.kabe.quizapp.destinations.StartScreenDestination
 import com.kabe.quizapp.ui.theme.DarkBlue1
 import com.kabe.quizapp.ui.theme.White
 import com.kabe.quizapp.ui.theme.spacing
-import com.kabe.quizapp.ui.views.CategoryCard
+import com.kabe.quizapp.categoryscreen.views.CategoryCard
 import com.kabe.quizapp.ui.views.CommonBoxHeader
 import com.kabe.quizapp.ui.views.CommonButtonIcon
 import com.kabe.quizapp.ui.views.CommonScreenCard

@@ -242,6 +242,7 @@ fun QuizScreenView(
                                 selectedAnswer = quizScreenState.currentSelectedAnswer.value,
                                 correctAnswer = quizScreenState.currentCorrectAnswer.value
                             ) {
+
                                 quizScreenState.currentSelectedAnswer.value = choice
                                 quizScreenState.currentCorrectAnswer.value =
                                     correctAnswer.toString()
@@ -249,11 +250,16 @@ fun QuizScreenView(
 
                                 quizScreenState.answeredQuestions.add(quizScreenState.currentSelectedAnswer.value == quizScreenState.currentCorrectAnswer.value)
 
+                                when (quizScreenState.currentSelectedAnswer.value) {
+                                    correctAnswer.toString() -> quizScreenState.correctAnswers.value++
+                                    else -> quizScreenState.incorrectAnswers.value++
+                                }
+
                                 scope.launch {
                                     delay(500L)
                                     quizScreenState.currentTriviaIndex.value++
                                     if (quizScreenState.currentTriviaIndex.value >= triviaList.size) {
-                                        navigator?.navigate(ResultScreenDestination)
+                                        navigator?.navigate(ResultScreenDestination(amount,quizScreenState.correctAnswers.value,quizScreenState.incorrectAnswers.value))
                                     }
                                 }
                             }
@@ -273,7 +279,9 @@ fun rememberQuizScreenState(
     currentCorrectAnswer: MutableState<String> = mutableStateOf(""),
     showCorrectAndIncorrectAnswerIcon: MutableState<Boolean> = mutableStateOf(false),
     shuffledChoices: MutableList<String> = mutableStateListOf(),
-    answeredQuestions: MutableList<Boolean> = mutableStateListOf()
+    answeredQuestions: MutableList<Boolean> = mutableStateListOf(),
+    correctAnswers: MutableState<Int> = mutableStateOf(0),
+    incorrectAnswers: MutableState<Int> = mutableStateOf(0),
 
 ) = remember(
     currentTriviaIndex,
@@ -282,7 +290,9 @@ fun rememberQuizScreenState(
     currentCorrectAnswer,
     showCorrectAndIncorrectAnswerIcon,
     shuffledChoices,
-    answeredQuestions
+    answeredQuestions,
+    correctAnswers,
+    incorrectAnswers
 
 ) {
     QuizScreenState(
@@ -292,7 +302,9 @@ fun rememberQuizScreenState(
         currentCorrectAnswer,
         showCorrectAndIncorrectAnswerIcon,
         shuffledChoices,
-        answeredQuestions
+        answeredQuestions,
+        correctAnswers,
+        incorrectAnswers
     )
 }
 

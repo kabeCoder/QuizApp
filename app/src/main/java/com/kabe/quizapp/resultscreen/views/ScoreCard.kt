@@ -1,4 +1,4 @@
-package com.kabe.quizapp.ui.views
+package com.kabe.quizapp.resultscreen.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,28 +23,25 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.kabe.quizapp.R
-import com.kabe.quizapp.ui.theme.Pink
 import com.kabe.quizapp.ui.theme.spacing
 
 @Composable
-fun CategoryCard(
+fun ScoreCard(
     modifier: Modifier = Modifier,
-    painter: Painter,
+    number: Int,
     label: String,
     labelColor: Color,
-    iconSize: Dp,
-    onClick: (String) -> Unit
+    cardBackground: Color,
+    onClick: () -> Unit
 ) {
     ConstraintLayout(
         modifier = modifier
@@ -52,12 +49,12 @@ fun CategoryCard(
         Box(
             modifier = Modifier
                 .clip(shape = RoundedCornerShape(10.dp))
-                .background(Color.White)
+                .background(cardBackground)
                 .clickable {
-                    onClick.invoke(label)
+                    //onClick.invoke()
                 }
-                .width(140.dp)
-                .height(130.dp),
+                .width(90.dp)
+                .height(60.dp),
             contentAlignment = Alignment.Center
 
         ) {
@@ -65,12 +62,22 @@ fun CategoryCard(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Image(
-                    painter = painter,
-                    contentDescription = stringResource(id = R.string.label_icon_button_description),
-                modifier = Modifier
-                    .size(iconSize)
+                Text(
+                    text = number.toString(),
+                    modifier = Modifier
+                        .padding(
+                            start = MaterialTheme.spacing.small,
+                            end = MaterialTheme.spacing.small
+                        ),
+                    textAlign = TextAlign.Center,
+                    softWrap = true,
+                    style = MaterialTheme.typography.h5.copy(
+                        fontSize = 32.sp,
+                        color = labelColor,
+                        fontWeight = FontWeight.W600
+                    )
                 )
+
                 Text(
                     text = label,
                     modifier = Modifier
@@ -80,7 +87,6 @@ fun CategoryCard(
                         ),
                     textAlign = TextAlign.Center,
                     softWrap = true,
-                    maxLines = 3,
                     style = MaterialTheme.typography.h5.copy(
                         fontSize = 12.sp,
                         color = labelColor,
@@ -104,21 +110,30 @@ fun CategoryCard(
                     color = Color.Transparent,
                     shape = RoundedCornerShape(10.dp)
                 )
-                .width(140.dp)
-                .height(130.dp),
+                .width(90.dp)
+                .height(60.dp),
             contentAlignment = Alignment.Center
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Icon(
-                    painter = painter,
-                    contentDescription = stringResource(id = R.string.label_icon_button_description),
+                Text(
+                    text = number.toString(),
                     modifier = Modifier
-                        .size(iconSize),
-                    tint = Color.Transparent
+                        .padding(
+                            start = MaterialTheme.spacing.small,
+                            end = MaterialTheme.spacing.small
+                        ),
+                    textAlign = TextAlign.Center,
+                    softWrap = true,
+                    style = MaterialTheme.typography.h5.copy(
+                        fontSize = 32.sp,
+                        color = labelColor,
+                        fontWeight = FontWeight.W600
+                    )
                 )
+
                 Text(
                     text = label,
                     modifier = Modifier
@@ -128,7 +143,6 @@ fun CategoryCard(
                         ),
                     textAlign = TextAlign.Center,
                     softWrap = true,
-                    maxLines = 3,
                     style = MaterialTheme.typography.h5.copy(
                         fontSize = 12.sp,
                         color = Color.Transparent,
@@ -137,18 +151,5 @@ fun CategoryCard(
                 )
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun CategoryCardPreview() {
-    CategoryCard(
-        painter = painterResource(id = R.drawable.ic_any),
-        label = stringResource(id = R.string.label_preview_category_text),
-        labelColor = Pink,
-        iconSize = 75.dp
-    ) {
-
     }
 }

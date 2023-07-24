@@ -170,4 +170,9 @@
     // Quiz Screen
     <string name="label_question_number">Question %1$s</string>
 
+    // Result Screen
+    <string name="label_question">Question</string>
+    <string name="label_correct">Correct</string>
+    <string name="label_incorrect">Incorrect</string>
+
 </resources>
