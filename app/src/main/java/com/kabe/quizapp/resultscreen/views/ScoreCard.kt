@@ -54,7 +54,7 @@ fun ScoreCard(
                     //onClick.invoke()
                 }
                 .width(90.dp)
-                .height(60.dp),
+                .height(90.dp),
             contentAlignment = Alignment.Center
 
         ) {
@@ -68,6 +68,7 @@ fun ScoreCard(
                         .padding(
                             start = MaterialTheme.spacing.small,
                             end = MaterialTheme.spacing.small
+
                         ),
                     textAlign = TextAlign.Center,
                     softWrap = true,
@@ -84,7 +85,8 @@ fun ScoreCard(
                         .padding(
                             start = MaterialTheme.spacing.small,
                             end = MaterialTheme.spacing.small
-                        ),
+                        )
+                        .offset(y = -(10.dp)),
                     textAlign = TextAlign.Center,
                     softWrap = true,
                     style = MaterialTheme.typography.h5.copy(
@@ -111,7 +113,7 @@ fun ScoreCard(
                     shape = RoundedCornerShape(10.dp)
                 )
                 .width(90.dp)
-                .height(60.dp),
+                .height(90.dp),
             contentAlignment = Alignment.Center
         ) {
             Column(
@@ -140,7 +142,8 @@ fun ScoreCard(
                         .padding(
                             start = MaterialTheme.spacing.small,
                             end = MaterialTheme.spacing.small
-                        ),
+                        )
+                        .offset(y = -(10.dp)),
                     textAlign = TextAlign.Center,
                     softWrap = true,
                     style = MaterialTheme.typography.h5.copy(
