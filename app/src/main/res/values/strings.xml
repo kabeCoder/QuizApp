@@ -174,5 +174,7 @@
     <string name="label_question">Question</string>
     <string name="label_correct">Correct</string>
     <string name="label_incorrect">Incorrect</string>
+    <string name="label_leader_board">Leader Board</string>
+    <string name="label_play_again">Play Again</string>
 
 </resources>

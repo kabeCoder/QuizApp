@@ -54,7 +54,7 @@ fun ScoreCard(
                     //onClick.invoke()
                 }
                 .width(90.dp)
-                .height(90.dp),
+                .height(70.dp),
             contentAlignment = Alignment.Center
 
         ) {
@@ -113,7 +113,7 @@ fun ScoreCard(
                     shape = RoundedCornerShape(10.dp)
                 )
                 .width(90.dp)
-                .height(90.dp),
+                .height(70.dp),
             contentAlignment = Alignment.Center
         ) {
             Column(
