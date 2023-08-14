@@ -80,6 +80,14 @@ fun QuizScreenView(
 
     val responseCode = viewModel.responseCode.collectAsState(initial = "").value
 
+    val finalScore = when (difficulty) {
+        AppConstants.EASY_DIFFICULTY -> (1 * quizScreenState.correctAnswers.value)
+        AppConstants.MEDIUM_DIFFICULTY -> (2 * quizScreenState.correctAnswers.value)
+        else -> {
+            (3 * quizScreenState.correctAnswers.value)
+        }
+    }
+
     LaunchedEffect(Unit) {
         viewModel.getTrivia(amount, category, difficulty, type)
         viewModel.getResponseCode(amount, category, difficulty, type)
@@ -237,7 +245,8 @@ fun QuizScreenView(
                                         end = MaterialTheme.spacing.large,
                                         bottom = MaterialTheme.spacing.medium + MaterialTheme.spacing.small
                                     ),
-                                textFieldContent = choice,
+                                textFieldContent = Html.fromHtml(choice, Html.FROM_HTML_MODE_LEGACY)
+                                    .toString(),
                                 isIconVisible = quizScreenState.showCorrectAndIncorrectAnswerIcon.value,
                                 selectedAnswer = quizScreenState.currentSelectedAnswer.value,
                                 correctAnswer = quizScreenState.currentCorrectAnswer.value
@@ -259,12 +268,20 @@ fun QuizScreenView(
                                     delay(500L)
                                     quizScreenState.currentTriviaIndex.value++
                                     if (quizScreenState.currentTriviaIndex.value >= triviaList.size) {
-                                        navigator?.navigate(ResultScreenDestination(amount,quizScreenState.correctAnswers.value,quizScreenState.incorrectAnswers.value))
+                                        navigator?.navigate(
+                                            ResultScreenDestination(
+                                                amount,
+                                                quizScreenState.correctAnswers.value,
+                                                quizScreenState.incorrectAnswers.value,
+                                                finalScore = finalScore.toInt()
+                                            )
+                                        )
                                     }
                                 }
                             }
                         }
                     }
+
                 }
             }
         }
@@ -283,7 +300,7 @@ fun rememberQuizScreenState(
     correctAnswers: MutableState<Int> = mutableStateOf(0),
     incorrectAnswers: MutableState<Int> = mutableStateOf(0),
 
-) = remember(
+    ) = remember(
     currentTriviaIndex,
     currentScore,
     currentAnswerSelected,

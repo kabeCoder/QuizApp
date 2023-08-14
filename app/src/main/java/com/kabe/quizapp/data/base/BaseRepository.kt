@@ -23,12 +23,14 @@ abstract class BaseRepository {
                         exceptionMessage = e.message
                     )
                 }
+
                 is HttpException -> {
                     ErrorResponse(
                         e.code(),
                         extractHttpErrorMessage(e)
                     )
                 }
+
                 else -> {
                     ErrorResponse(
                         exceptionMessage = e.message

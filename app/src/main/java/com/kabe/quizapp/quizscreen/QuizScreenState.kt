@@ -1,8 +1,6 @@
 package com.kabe.quizapp.quizscreen
 
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 
 class QuizScreenState(
     val currentTriviaIndex: MutableState<Int>,

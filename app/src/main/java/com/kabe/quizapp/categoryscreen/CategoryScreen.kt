@@ -23,12 +23,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.kabe.quizapp.R
+import com.kabe.quizapp.categoryscreen.views.CategoryCard
 import com.kabe.quizapp.destinations.SetupScreenDestination
 import com.kabe.quizapp.destinations.StartScreenDestination
 import com.kabe.quizapp.ui.theme.DarkBlue1
 import com.kabe.quizapp.ui.theme.White
 import com.kabe.quizapp.ui.theme.spacing
-import com.kabe.quizapp.categoryscreen.views.CategoryCard
 import com.kabe.quizapp.ui.views.CommonBoxHeader
 import com.kabe.quizapp.ui.views.CommonButtonIcon
 import com.kabe.quizapp.ui.views.CommonScreenCard

@@ -2,7 +2,6 @@ package com.kabe.quizapp.resultscreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,15 +13,12 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
@@ -32,7 +28,6 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.kabe.quizapp.R
 import com.kabe.quizapp.destinations.CategoryScreenDestination
-import com.kabe.quizapp.destinations.SetupScreenDestination
 import com.kabe.quizapp.destinations.StartScreenDestination
 import com.kabe.quizapp.resultscreen.views.ScoreCard
 import com.kabe.quizapp.ui.theme.Blue1
@@ -40,11 +35,9 @@ import com.kabe.quizapp.ui.theme.Cyan
 import com.kabe.quizapp.ui.theme.DarkBlue1
 import com.kabe.quizapp.ui.theme.Green1
 import com.kabe.quizapp.ui.theme.Orange
-import com.kabe.quizapp.ui.theme.QuizAppTheme
 import com.kabe.quizapp.ui.theme.Red1
 import com.kabe.quizapp.ui.theme.White
 import com.kabe.quizapp.ui.theme.spacing
-import com.kabe.quizapp.ui.views.CommonBoxHeader
 import com.kabe.quizapp.ui.views.CommonButton
 import com.kabe.quizapp.ui.views.CommonButtonIcon
 import com.kabe.quizapp.ui.views.CommonScreenCard
@@ -58,13 +51,15 @@ fun ResultScreen(
     questionItems: Int,
     correctItems: Int,
     incorrectItems: Int,
+    finalScore: Int,
     navigator: DestinationsNavigator?
 ) {
     ResultScreenView(
         questionItems = questionItems,
         correctItems = correctItems,
         incorrectItems = incorrectItems,
-        navigator = navigator
+        navigator = navigator,
+        finalScore = finalScore
     )
 }
 
@@ -73,8 +68,16 @@ fun ResultScreenView(
     questionItems: Int,
     correctItems: Int,
     incorrectItems: Int,
+    finalScore: Int,
     navigator: DestinationsNavigator?
 ) {
+    val resultFeedback = when ((correctItems.toFloat() / questionItems) * 100) {
+        in 0.0..49.99 -> R.drawable.ic_nice_try
+        in 50.0..79.99 -> R.drawable.ic_good_job
+        else -> R.drawable.ic_great_job
+    }
+
+
     ConstraintLayout(
         modifier = Modifier
             .background(Blue1)
@@ -109,7 +112,7 @@ fun ResultScreenView(
 
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(R.drawable.ic_nice_try)
+                .data(resultFeedback)
                 .crossfade(true)
                 .build(),
             contentDescription = "",
@@ -157,7 +160,7 @@ fun ResultScreenView(
             )
 
             Text(
-                text = "150",
+                text = finalScore.toString(),
                 modifier = Modifier
                     .offset(y = -(60.dp)),
                 textAlign = TextAlign.Center,

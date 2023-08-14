@@ -40,6 +40,7 @@ class QuizScreenViewModel @Inject constructor(
                 Status.SUCCESS -> triviaResult.data?.let { trivia ->
                     _trivia.emit(trivia.toMutableList())
                 }
+
                 Status.ERROR -> {
                     triviaResult.message?.let { _errorMessage.emit(it) }
                 }
@@ -59,6 +60,7 @@ class QuizScreenViewModel @Inject constructor(
                 Status.SUCCESS -> triviaResult.data?.let { trivia ->
                     _responseCode.emit(trivia)
                 }
+
                 Status.ERROR -> {
                     triviaResult.message?.let { _errorMessage.emit(it) }
                 }

@@ -1,6 +1,5 @@
 package com.kabe.quizapp.ui.views
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -56,7 +55,7 @@ fun CommonTextFieldWithLabel(
         BasicTextField(
             value = textFieldContent,
             onValueChange = {
-                            textFieldValue.value = it
+                textFieldValue.value = it
             },
             modifier = Modifier
                 .background(

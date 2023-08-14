@@ -1,6 +1,5 @@
 package com.kabe.quizapp.resultscreen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kabe.quizapp.data.repository.trivia.TriviaRepository

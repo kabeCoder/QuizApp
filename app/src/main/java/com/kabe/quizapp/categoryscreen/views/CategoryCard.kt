@@ -68,8 +68,8 @@ fun CategoryCard(
                 Image(
                     painter = painter,
                     contentDescription = stringResource(id = R.string.label_icon_button_description),
-                modifier = Modifier
-                    .size(iconSize)
+                    modifier = Modifier
+                        .size(iconSize)
                 )
                 Text(
                     text = label,

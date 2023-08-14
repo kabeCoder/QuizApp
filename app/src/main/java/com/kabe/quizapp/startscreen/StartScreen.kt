@@ -34,7 +34,7 @@ fun StartScreen(
 @Composable
 fun StartScreenView(
     navigator: DestinationsNavigator?
-){
+) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()

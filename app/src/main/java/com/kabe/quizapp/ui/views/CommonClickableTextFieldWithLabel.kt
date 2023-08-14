@@ -73,7 +73,7 @@ fun CommonClickableTextFieldWithLabel(
                     start.linkTo(parent.start)
                     top.linkTo(parent.top)
                 },
-            style =  MaterialTheme.typography.h4.copy(
+            style = MaterialTheme.typography.h4.copy(
                 fontSize = 16.sp,
                 color = Black,
                 fontWeight = FontWeight.W600

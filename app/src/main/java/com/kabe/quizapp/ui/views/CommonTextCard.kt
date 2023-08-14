@@ -1,6 +1,5 @@
 package com.kabe.quizapp.ui.views
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -123,15 +122,24 @@ fun CommonTextCard(
                         )
                     } else innerTextField()
 
-                    if(isIconVisible) {
+                    if (isIconVisible) {
                         if (textFieldContent == selectedAnswer) {
                             if (textFieldContent == correctAnswer) {
-                                Image(painter = painterResource(id = R.drawable.ic_check_mark_1), contentDescription = null )
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_check_mark_1),
+                                    contentDescription = null
+                                )
                             } else {
-                                Image(painter = painterResource(id = R.drawable.ic_x_mark_1), contentDescription = null )
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_x_mark_1),
+                                    contentDescription = null
+                                )
                             }
                         } else if (textFieldContent == correctAnswer) {
-                            Image(painter = painterResource(id = R.drawable.ic_check_mark_2), contentDescription = null )
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_check_mark_2),
+                                contentDescription = null
+                            )
                         }
                     }
                 }
