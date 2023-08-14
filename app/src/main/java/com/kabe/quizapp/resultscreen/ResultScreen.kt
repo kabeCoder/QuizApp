@@ -2,6 +2,7 @@ package com.kabe.quizapp.resultscreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +12,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -18,6 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.kabe.quizapp.R
 import com.kabe.quizapp.destinations.CategoryScreenDestination
 import com.kabe.quizapp.destinations.SetupScreenDestination
@@ -109,6 +114,16 @@ fun ResultScreenView(
                             + MaterialTheme.spacing.extraLarge
                 )
         ) {
+//            Box() {
+//                AsyncImage(
+//                    model = ImageRequest.Builder(LocalContext.current)
+//                        .data(R.drawable.ic_three_star)
+//                        .crossfade(true)
+//                        .build(),
+//                    contentDescription = "",
+//                )
+//            }
+
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier.fillMaxWidth()
@@ -134,13 +149,14 @@ fun ResultScreenView(
             }
 
             CommonButton(
-                modifier =  Modifier.padding(
+                modifier = Modifier.padding(
                     start = MaterialTheme.spacing.medium,
                     top = MaterialTheme.spacing.large,
                     end = MaterialTheme.spacing.medium
 
                 ),
-                buttonName = stringResource(id = R.string.label_leader_board), textStyle = MaterialTheme.typography.h5.copy(
+                buttonName = stringResource(id = R.string.label_leader_board),
+                textStyle = MaterialTheme.typography.h5.copy(
                     fontSize = 14.sp,
                     color = White,
                     fontWeight = FontWeight.W600
@@ -152,12 +168,13 @@ fun ResultScreenView(
             }
 
             CommonButton(
-                modifier =  Modifier.padding(
+                modifier = Modifier.padding(
                     start = MaterialTheme.spacing.medium,
                     top = MaterialTheme.spacing.medium,
                     end = MaterialTheme.spacing.medium
                 ),
-                buttonName = stringResource(id = R.string.label_play_again), textStyle = MaterialTheme.typography.h5.copy(
+                buttonName = stringResource(id = R.string.label_play_again),
+                textStyle = MaterialTheme.typography.h5.copy(
                     fontSize = 14.sp,
                     color = White,
                     fontWeight = FontWeight.W600
