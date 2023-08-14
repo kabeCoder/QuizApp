@@ -6,19 +6,26 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
@@ -26,6 +33,7 @@ import coil.request.ImageRequest
 import com.kabe.quizapp.R
 import com.kabe.quizapp.destinations.CategoryScreenDestination
 import com.kabe.quizapp.destinations.SetupScreenDestination
+import com.kabe.quizapp.destinations.StartScreenDestination
 import com.kabe.quizapp.resultscreen.views.ScoreCard
 import com.kabe.quizapp.ui.theme.Blue1
 import com.kabe.quizapp.ui.theme.Cyan
@@ -76,6 +84,7 @@ fun ResultScreenView(
         val (
             btnBack,
             resultQuizCard,
+            imgThumbsUp
         ) = createRefs()
 
         CommonButtonIcon(
@@ -91,11 +100,29 @@ fun ResultScreenView(
             buttonIcon = painterResource(id = R.drawable.ic_back),
             buttonColor = ButtonDefaults.buttonColors(backgroundColor = DarkBlue1),
             onClick = {
-//                navigator?.popBackStack(
-//                    route = CategoryScreenDestination,
-//                    inclusive = false
-//                )
+                navigator?.popBackStack(
+                    route = StartScreenDestination,
+                    inclusive = false
+                )
             }
+        )
+
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.ic_nice_try)
+                .crossfade(true)
+                .build(),
+            contentDescription = "",
+            modifier = Modifier
+                .constrainAs(imgThumbsUp) {
+                    centerHorizontallyTo(parent)
+                    top.linkTo(btnBack.bottom)
+                    bottom.linkTo(resultQuizCard.top)
+                }
+                .zIndex(1f)
+                .offset(y = MaterialTheme.spacing.extraLarge + MaterialTheme.spacing.large + MaterialTheme.spacing.small)
+                .width(175.dp)
+                .height(140.dp)
         )
 
         CommonScreenCard(
@@ -109,24 +136,43 @@ fun ResultScreenView(
                     start = MaterialTheme.spacing.medium,
                     top = MaterialTheme.spacing.large + MaterialTheme.spacing.extraLarge,
                     end = MaterialTheme.spacing.medium,
-                    bottom = MaterialTheme.spacing.extraLarge
-                            + MaterialTheme.spacing.extraLarge
-                            + MaterialTheme.spacing.extraLarge
+                    bottom = MaterialTheme.spacing.extraLarge + MaterialTheme.spacing.extraLarge
+
                 )
+                .zIndex(-1f)
         ) {
-//            Box() {
-//                AsyncImage(
-//                    model = ImageRequest.Builder(LocalContext.current)
-//                        .data(R.drawable.ic_three_star)
-//                        .crossfade(true)
-//                        .build(),
-//                    contentDescription = "",
-//                )
-//            }
+
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(R.drawable.ic_three_star)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = "",
+                modifier = Modifier
+                    .padding(
+                        top = MaterialTheme.spacing.large + MaterialTheme.spacing.large + MaterialTheme.spacing.medium,
+                    )
+                    .width(200.dp)
+                    .height(136.dp)
+            )
+
+            Text(
+                text = "150",
+                modifier = Modifier
+                    .offset(y = -(60.dp)),
+                textAlign = TextAlign.Center,
+                softWrap = true,
+                style = MaterialTheme.typography.h5.copy(
+                    fontSize = 32.sp,
+                    color = White,
+                    fontWeight = FontWeight.W900
+                )
+            )
 
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
             ) {
                 ScoreCard(
                     number = questionItems,
@@ -151,7 +197,7 @@ fun ResultScreenView(
             CommonButton(
                 modifier = Modifier.padding(
                     start = MaterialTheme.spacing.medium,
-                    top = MaterialTheme.spacing.large,
+                    top = MaterialTheme.spacing.extraLarge,
                     end = MaterialTheme.spacing.medium
 
                 ),
