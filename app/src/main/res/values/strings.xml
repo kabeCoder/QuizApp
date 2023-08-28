@@ -15,6 +15,7 @@
 
     // Start Screen
     <string name="label_play">Play</string>
+    <string name="label_versus">Versus</string>
     <string name="label_exit">Exit</string>
 
     // Category Screen

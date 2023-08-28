@@ -41,6 +41,7 @@ fun StartScreenView(
     ) {
         val (
             playButton,
+            versusButton,
             exitButton
         ) = createRefs()
 
@@ -62,8 +63,23 @@ fun StartScreenView(
         }
 
         CommonButton(
-            modifier = Modifier.constrainAs(exitButton) {
+            modifier = Modifier.constrainAs(versusButton) {
                 top.linkTo(playButton.bottom, margin = 16.dp)
+                centerHorizontallyTo(parent)
+            },
+            buttonName = stringResource(id = R.string.label_versus),
+            textStyle = MaterialTheme.typography.h4.copy(
+                fontSize = 14.sp,
+                color = White,
+                fontWeight = FontWeight.W600
+            ),
+            buttonColor = ButtonDefaults.buttonColors(backgroundColor = Blue1),
+            backgroundOffset = MaterialTheme.spacing.extraSmall
+        ) { }
+
+        CommonButton(
+            modifier = Modifier.constrainAs(exitButton) {
+                top.linkTo(versusButton.bottom, margin = 16.dp)
                 centerHorizontallyTo(parent)
             },
             buttonName = stringResource(id = R.string.label_exit),
