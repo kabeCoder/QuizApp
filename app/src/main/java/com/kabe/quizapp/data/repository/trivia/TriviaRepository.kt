@@ -34,8 +34,6 @@ class TriviaRepository @Inject constructor(
 
         val result = triviaService.getTrivia(amount, category, difficulty, type)
 
-        appDatabase.triviaDao().insertCurrentTrivia(result.results)
-
         result.responseCode
     }
 
