@@ -77,6 +77,12 @@ fun ResultScreenView(
         else -> R.drawable.ic_great_job
     }
 
+    val ratingImage = when ((correctItems.toFloat() / questionItems) * 100) {
+        in 0.0..49.99 -> R.drawable.ic_one_star
+        in 50.0..79.99 -> R.drawable.ic_two_star
+        else -> R.drawable.ic_three_star
+    }
+
 
     ConstraintLayout(
         modifier = Modifier
@@ -147,7 +153,7 @@ fun ResultScreenView(
 
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(R.drawable.ic_three_star)
+                    .data(ratingImage)
                     .crossfade(true)
                     .build(),
                 contentDescription = "",
@@ -201,26 +207,9 @@ fun ResultScreenView(
                 modifier = Modifier.padding(
                     start = MaterialTheme.spacing.medium,
                     top = MaterialTheme.spacing.extraLarge,
-                    end = MaterialTheme.spacing.medium
+                    end = MaterialTheme.spacing.medium,
 
-                ),
-                buttonName = stringResource(id = R.string.label_leader_board),
-                textStyle = MaterialTheme.typography.h5.copy(
-                    fontSize = 14.sp,
-                    color = White,
-                    fontWeight = FontWeight.W600
-                ),
-                buttonColor = ButtonDefaults.buttonColors(backgroundColor = Cyan),
-                backgroundOffset = MaterialTheme.spacing.extraSmall
-            ) {
-
-            }
-
-            CommonButton(
-                modifier = Modifier.padding(
-                    start = MaterialTheme.spacing.medium,
-                    top = MaterialTheme.spacing.medium,
-                    end = MaterialTheme.spacing.medium
+                    bottom = MaterialTheme.spacing.medium
                 ),
                 buttonName = stringResource(id = R.string.label_play_again),
                 textStyle = MaterialTheme.typography.h5.copy(
@@ -236,11 +225,3 @@ fun ResultScreenView(
         }
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun ResultScreenPreview() {
-//    QuizAppTheme {
-//        ResultScreen()
-//    }
-//}

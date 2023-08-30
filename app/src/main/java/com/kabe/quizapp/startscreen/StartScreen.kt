@@ -51,24 +51,6 @@ fun StartScreen(
 fun StartScreenView(
     navigator: DestinationsNavigator?
 ) {
-    val context = LocalContext.current
-    val bluetoothManager: BluetoothManager = context.getSystemService(BluetoothManager::class.java)
-    val bluetoothAdapter: BluetoothAdapter? = bluetoothManager.adapter
-
-    val enableBluetoothLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult(),
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            Log.d("StartScreen", "Allowed by user")
-            // Bluetooth was enabled
-            // You can handle further actions here if needed
-        } else {
-            Log.d("StartScreen", "Declined by user")
-            // User declined to enable Bluetooth
-            // Handle this situation as needed
-        }
-    }
-
 
     ConstraintLayout(
         modifier = Modifier
@@ -76,7 +58,6 @@ fun StartScreenView(
     ) {
         val (
             playButton,
-            versusButton,
             exitButton
         ) = createRefs()
 
@@ -98,28 +79,8 @@ fun StartScreenView(
         }
 
         CommonButton(
-            modifier = Modifier.constrainAs(versusButton) {
-                top.linkTo(playButton.bottom, margin = 16.dp)
-                centerHorizontallyTo(parent)
-            },
-            buttonName = stringResource(id = R.string.label_versus),
-            textStyle = MaterialTheme.typography.h4.copy(
-                fontSize = 14.sp,
-                color = White,
-                fontWeight = FontWeight.W600
-            ),
-            buttonColor = ButtonDefaults.buttonColors(backgroundColor = Blue1),
-            backgroundOffset = MaterialTheme.spacing.extraSmall
-        ) {
-            if (bluetoothAdapter?.isEnabled == false) {
-                val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-                enableBluetoothLauncher.launch(enableBtIntent)
-            }
-        }
-
-        CommonButton(
             modifier = Modifier.constrainAs(exitButton) {
-                top.linkTo(versusButton.bottom, margin = 16.dp)
+                top.linkTo(playButton.bottom, margin = 16.dp)
                 centerHorizontallyTo(parent)
             },
             buttonName = stringResource(id = R.string.label_exit),
