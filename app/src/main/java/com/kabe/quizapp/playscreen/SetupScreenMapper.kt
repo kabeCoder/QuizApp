@@ -22,8 +22,22 @@ fun getCategorySelectedValue(categoryName: String): String {
         categoryItems[6] to categoryApiValueItems[5],
         categoryItems[7] to categoryApiValueItems[6],
         categoryItems[8] to categoryApiValueItems[7],
-        categoryItems[9] to categoryApiValueItems[8]
-        // Add more mappings here if needed
+        categoryItems[9] to categoryApiValueItems[8],
+        categoryItems[10] to categoryApiValueItems[9],
+        categoryItems[11] to categoryApiValueItems[10],
+        categoryItems[12] to categoryApiValueItems[11],
+        categoryItems[13] to categoryApiValueItems[12],
+        categoryItems[14] to categoryApiValueItems[13],
+        categoryItems[15] to categoryApiValueItems[14],
+        categoryItems[16] to categoryApiValueItems[15],
+        categoryItems[17] to categoryApiValueItems[16],
+        categoryItems[18] to categoryApiValueItems[17],
+        categoryItems[19] to categoryApiValueItems[18],
+        categoryItems[20] to categoryApiValueItems[19],
+        categoryItems[21] to categoryApiValueItems[20],
+        categoryItems[22] to categoryApiValueItems[21],
+        categoryItems[23] to categoryApiValueItems[22],
+        categoryItems[24] to categoryApiValueItems[23]
     )
 
     return categoryMap[categoryName] ?: ""
