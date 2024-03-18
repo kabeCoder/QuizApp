@@ -220,7 +220,10 @@ fun ResultScreenView(
                 buttonColor = ButtonDefaults.buttonColors(backgroundColor = Blue1),
                 backgroundOffset = MaterialTheme.spacing.extraSmall
             ) {
-                navigator?.navigate(CategoryScreenDestination)
+                navigator?.popBackStack(
+                    route = CategoryScreenDestination,
+                    inclusive = false
+                )
             }
         }
     }

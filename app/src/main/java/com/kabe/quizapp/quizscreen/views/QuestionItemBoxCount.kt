@@ -1,12 +1,16 @@
 package com.kabe.quizapp.quizscreen.views
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -27,26 +31,39 @@ fun QuestionItemBoxCount(
     ConstraintLayout(
         modifier = modifier.fillMaxWidth()
     ) {
-        LazyRow(modifier = modifier.fillMaxWidth()) {
-            items(numberOfItems) { index ->
-                val boxColor = when {
-                    currentQuestionIndex == index -> Orange
-                    index < currentQuestionIndex!! -> {
-                        if (answeredQuestions[index]) Color.Green else Color.Red
+        LazyColumn(
+            modifier = modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
+            content = {
+                itemsIndexed(items = (0 until numberOfItems).chunked(15)) { rowIndex, chunkedItems ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
+                    ) {
+                        chunkedItems.forEachIndexed { index, _ ->
+                            val questionIndex = rowIndex * 15 + index
+                            if (questionIndex < numberOfItems) {
+                                val boxColor = when {
+                                    currentQuestionIndex == questionIndex -> Color.Yellow
+                                    questionIndex < currentQuestionIndex!! -> {
+                                        if (answeredQuestions[questionIndex]) Color.Green else Color.Red
+                                    }
+
+                                    else -> Color.White
+                                }
+
+                                Box(
+                                    modifier = Modifier
+                                        .background(boxColor)
+                                        .width(15.dp)
+                                        .height(3.dp)
+                                )
+                            }
+                        }
                     }
-
-                    else -> Color.White
                 }
-
-                Box(
-                    modifier = Modifier
-                        .padding(end = MaterialTheme.spacing.extraSmall)
-                        .background(boxColor)
-                        .width(15.dp)
-                        .height(3.dp)
-                )
             }
-        }
+        )
     }
 }
 
