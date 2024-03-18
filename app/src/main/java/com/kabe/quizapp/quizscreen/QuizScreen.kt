@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -109,9 +110,9 @@ fun QuizScreenView(
 
         CountdownTimer(modifier = Modifier
             .constrainAs(quizTimer) {
-                top.linkTo(parent.top)
+                top.linkTo(parent.top, margin = 16.dp)
                 end.linkTo(parent.end)
-                bottom.linkTo(quizCard.top)
+                bottom.linkTo(quizTimer.top)
             }
             .padding(
                 top = MaterialTheme.spacing.large - MaterialTheme.spacing.small,
