@@ -8,8 +8,8 @@
 # Screenshots or Demo:
   ![ScreenRecording2024-03-19at2 45 04PM-ezgif com-video-to-gif-converter](https://github.com/kabeCoder/QuizApp/assets/121206784/9a31d601-29bb-48c8-a16e-7ee11f355d51) 
   ![ScreenRecording2024-03-19at2 45 04PMonline-video-cutter com-ezgif com-video-to-gif-converter](https://github.com/kabeCoder/QuizApp/assets/121206784/c99c6abe-c24f-4141-8011-52dd29e64cc2)
-  ![ScreenRecording2024-03-19at2 45 04PMonline-video-cutter com-ezgif com-video-to-gif-converter_1](https://github.com/kabeCoder/QuizApp/assets/121206784/051804fb-d60f-44ca-ad16-15406c8a770c)
-  ![ScreenRecording2024-03-19at2 45 04PMonline-video-cutter com-ezgif com-video-to-gif-converter_2](https://github.com/kabeCoder/QuizApp/assets/121206784/eab4ded3-5bd5-4c9d-872c-ad4579ff4eb8)
+  ![ScreenRecording2024-03-19at2 45 04PMonline-video-cutter com1-ezgif com-video-to-gif-converter](https://github.com/kabeCoder/QuizApp/assets/121206784/9c5b4596-6954-4066-9967-c3349a1ccdfc)
+  ![ScreenRecording2024-03-19at2 45 04PMonline-video-cutter com2-ezgif com-video-to-gif-converter](https://github.com/kabeCoder/QuizApp/assets/121206784/c55577d5-c310-4b3c-917d-be8582490adb)
   
 
 # Built With:
