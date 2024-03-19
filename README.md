@@ -1,5 +1,5 @@
 # Project Title: 
-  Quiz Game App (Android Jetpack Compose)
+  🎮 Quiz Game App (Android Jetpack Compose)
 
 # Project Description:
   This is a quiz app developed using Android Jetpack Compose and OpenTDB API. The app allows users to take quizzes in various categories fetched from the OpenTDB API. 
