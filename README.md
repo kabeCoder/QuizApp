@@ -6,8 +6,8 @@
   It provides a simple and engaging interface for users to test their knowledge and track their scores.
   
 # Screenshots or Demo:
-  Google Drive Link:
-  https://drive.google.com/drive/folders/1XRjo5UaxoKH54Wr6udvO8c53AafbckOy?usp=drive_link
+  ![ScreenRecording2024-03-19at2 45 04PM-ezgif com-video-to-gif-converter](https://github.com/kabeCoder/QuizApp/assets/121206784/9a31d601-29bb-48c8-a16e-7ee11f355d51) 
+  ![ScreenRecording2024-03-19at2 44 14PM-ezgif com-video-to-gif-converter](https://github.com/kabeCoder/QuizApp/assets/121206784/97e381ce-e44b-4860-a6fb-8199df5ae3b8)
 
 # Built With:
 
